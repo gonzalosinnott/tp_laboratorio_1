@@ -37,7 +37,11 @@
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "utn.h"
+
+#include "mi_biblioteca.h"
+
+#define true 1;
+#define false 0;
 
 int main(void)
 {
@@ -50,19 +54,19 @@ int main(void)
 	float resultadoResta;
 	float resultadoMultiplicacion;
 	float resultadoDivision;
-	long long resultadoFactorialUno;
-	long long resultadoFactorialDos;
-	int	ingresoNumeroUno = 0;
-	int	ingresoNumeroDos = 0;
-	int resultadoOperaciones = 0;
-	int divisionPorCero = 1;
-	int factorialNegativoUno = 1;
-	int factorialNegativoDos = 1;
+	int resultadoFactorialUno;
+	int resultadoFactorialDos;
+	int	ingresoNumeroUno = false;
+	int	ingresoNumeroDos = false;
+	int resultadoOperaciones = false;
+	int divisionPorCero = true;
+	int factorialNegativoUno = true;
+	int factorialNegativoDos = true;
 	char respuestaOtraOperacion;
 
 	do
 	{
-		respuesta = getEnteroConRango(&opcionIngresada, 1, 5, "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Calcular todas las operaciones\n 4. Informar resultados\n 5. Salir\n\nOpcion:", "\nError,", 3);
+		respuesta = getEnteroConRango(&opcionIngresada, 1, 5, "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Calcular todas las operaciones\n 4. Informar resultados\n 5. Salir\n\nOpcion:", "\nError, no es una opcion valida.", 3);
 		if (respuesta == 0)
 		{
 			switch(opcionIngresada)
@@ -142,7 +146,7 @@ int main(void)
 						}
 						if(factorialNegativoUno == 0)
 						{
-							printf("\nEl factorial de %.2f es: %lld",numeroUno, resultadoFactorialUno);
+							printf("\nEl factorial de %.2f es: %d",numeroUno, resultadoFactorialUno);
 						}
 						else
 						{
@@ -150,7 +154,7 @@ int main(void)
 						}
 						if(factorialNegativoDos == 0)
 						{
-							printf("\nEl factorial de %.2f es: %lld\n",numeroDos, resultadoFactorialDos);
+							printf("\nEl factorial de %.2f es: %d\n",numeroDos, resultadoFactorialDos);
 						}
 						else
 						{
@@ -178,6 +182,11 @@ int main(void)
 					printf("\nPrograma terminado.");
 					break;
 			}
+		}
+		else
+		{
+			printf("\nPrograma terminado.");
+			break;
 		}
 	}while(opcionIngresada != 5);
 	return EXIT_SUCCESS;

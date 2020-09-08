@@ -1,15 +1,15 @@
 /*
  ============================================================================
- Name        : utn.c
+ Name        : mi_biblioteca.c
  Author      : Gonzalo Sinnott Segura
  Version     :
  Copyright   :
- Description : Header de la biblioteca utn.c - Created on: 3 sept. 2020
+ Description : Header de la biblioteca mi_biblioteca.c - Created on: 3 sept. 2020
  ============================================================================
  */
 
-#ifndef UTN_H_
-#define UTN_H_
+#ifndef MI_BIBLIOTECA_H_
+#define MI_BIBLIOTECA_H_
 
 int getEntero(int* pNumero, char* msj, char* msjError, int reintentos);
 int getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjError, int intentos);
@@ -24,4 +24,4 @@ int getDivision (float numeroUno, float numeroDos, float *resultado);
 int getFactorial(float numero,float* resultado);
 
 
-#endif /* UTN_H_ */
+#endif /* MI_BIBLIOTECA_H_ */

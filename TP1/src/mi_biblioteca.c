@@ -4,7 +4,7 @@
  Author      : Gonzalo Sinnott Segura
  Version     :
  Copyright   :
- Description : Biblioteca utn.c - Created on: 3 sept. 2020
+ Description : Biblioteca mi_biblioteca.c - Created on: 3 sept. 2020
  ============================================================================
  */
 
