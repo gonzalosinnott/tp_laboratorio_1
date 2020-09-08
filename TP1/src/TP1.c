@@ -62,13 +62,13 @@ int main(void)
 
 	do
 	{
-		respuesta = utn_getEnteroConRango(&opcionIngresada, 1, 5, "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Calcular todas las operaciones\n 4. Informar resultados\n 5. Salir\n\nOpcion:", "\nError,", 3);
+		respuesta = getEnteroConRango(&opcionIngresada, 1, 5, "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Calcular todas las operaciones\n 4. Informar resultados\n 5. Salir\n\nOpcion:", "\nError,", 3);
 		if (respuesta == 0)
 		{
 			switch(opcionIngresada)
 			{
 				case 1:
-					if(utn_getFloat(&numeroUno, "\nIngrese el primer numero:", "\nError, ", 3) ==0)
+					if(getFloat(&numeroUno, "\nIngrese el primer numero:", "\nError, ", 3) ==0)
 					{
 						printf("Numero ingresado: %.2f\n",numeroUno);
 						ingresoNumeroUno = 1;
@@ -77,7 +77,7 @@ int main(void)
 				case 2:
 					if(ingresoNumeroUno == 1)
 					{
-						if(utn_getFloat(&numeroDos, "\nIngrese el segundo numero:", "\nError, ", 3)== 0)
+						if(getFloat(&numeroDos, "\nIngrese el segundo numero:", "\nError, ", 3)== 0)
 						{
 							printf("Numero ingresado: %.2f\n",numeroDos);
 							ingresoNumeroDos = 1;
@@ -91,29 +91,29 @@ int main(void)
 				case 3:
 					if(ingresoNumeroUno == 1 && ingresoNumeroDos == 1)
 					{
-						if(suma(numeroUno,numeroDos,&resultado) == 0)
+						if(getSuma(numeroUno,numeroDos,&resultado) == 0)
 						{
 							resultadoSuma = resultado;
 						}
-						if(resta(numeroUno,numeroDos,&resultado) == 0)
+						if(getResta(numeroUno,numeroDos,&resultado) == 0)
 						{
 							resultadoResta = resultado;
 						}
-						if(multiplicacion(numeroUno,numeroDos,&resultado) == 0)
+						if(getMultiplicacion(numeroUno,numeroDos,&resultado) == 0)
 						{
 							resultadoMultiplicacion = resultado;
 						}
-						if(division(numeroUno,numeroDos,&resultado) == 0)
+						if(getDivision(numeroUno,numeroDos,&resultado) == 0)
 						{
 							resultadoDivision = resultado;
 							divisionPorCero = 0;
 						}
-						if(factorial(numeroUno, &resultado) == 0)
+						if(getFactorial(numeroUno, &resultado) == 0)
 						{
 							resultadoFactorialUno = resultado;
 							factorialNegativoUno = 0;
 						}
-						if(factorial(numeroDos, &resultado) == 0)
+						if(getFactorial(numeroDos, &resultado) == 0)
 						{
 							resultadoFactorialDos = resultado;
 							factorialNegativoDos = 0;
@@ -165,6 +165,7 @@ int main(void)
 						}while(respuestaOtraOperacion !='y' && respuestaOtraOperacion !='n');
 						if(respuestaOtraOperacion=='n')
 						{
+							printf("\nPrograma terminado.");
 							return EXIT_SUCCESS;
 						}
 					}

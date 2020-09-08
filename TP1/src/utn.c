@@ -13,7 +13,7 @@
 #include <ctype.h>
 
 /*
- * \brief utn_getEntero : Pide al usuario un numero entero.
+ * \brief getEntero : Pide al usuario un numero entero.
  * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
  * \param msg: El mensaje que imprime para pedir un valor
  * \param msgError: El mensaje que imprime si el rango no es valido
@@ -21,7 +21,7 @@
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-int utn_getEntero(int* pValor, char* msj, char* msjError, int intentos)
+int getEntero(int* pValor, char* msj, char* msjError, int intentos)
 {
 	int retorno = -1;
 	int num;
@@ -54,7 +54,7 @@ int utn_getEntero(int* pValor, char* msj, char* msjError, int intentos)
 }
 
 /*
- * \brief utn_getEnteroConRango : Pide al usuario un numero entero dentor de un rango determinado.
+ * \brief getEnteroConRango : Pide al usuario un numero entero dentor de un rango determinado.
  * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
  * \param min: Valor minimo valido (inclusive)
  * \param max: Valor maximo valido (inclusive)
@@ -64,7 +64,7 @@ int utn_getEntero(int* pValor, char* msj, char* msjError, int intentos)
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-int utn_getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjError, int intentos)
+int getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjError, int intentos)
 {
 	int retorno = -1;
 	int num;
@@ -96,7 +96,7 @@ int utn_getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjErr
 }
 
 /*
- * \brief utn_getFloat : Pide al usuario un numero con decimales.
+ * \brief getFloat : Pide al usuario un numero con decimales.
  * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
  * \param msg: El mensaje que imprime para pedir un valor
  * \param msgError: El mensaje que imprime si el rango no es valido
@@ -104,7 +104,7 @@ int utn_getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjErr
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-int utn_getFloat(float* pValor, char* msj, char* msjError, int intentos)
+int getFloat(float* pValor, char* msj, char* msjError, int intentos)
 {
 	int retorno = -1;
 	float num;
@@ -136,7 +136,7 @@ int utn_getFloat(float* pValor, char* msj, char* msjError, int intentos)
 }
 
 /*
- * \brief utn_getFloatConRango : Pide al usuario un numero con decimales dentro de un rango determinado
+ * \brief getFloatConRango : Pide al usuario un numero con decimales dentro de un rango determinado
  * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
  * \param min: Valor minimo valido (inclusive)
  * \param max: Valor maximo valido (inclusive)
@@ -146,7 +146,7 @@ int utn_getFloat(float* pValor, char* msj, char* msjError, int intentos)
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-int utn_getFloatConRango(float* pValor, int min, int max, char* msj, char* msjError, int intentos)
+int getFloatConRango(float* pValor, int min, int max, char* msj, char* msjError, int intentos)
 {
 	int retorno = -1;
 	float num;
@@ -178,7 +178,7 @@ int utn_getFloatConRango(float* pValor, int min, int max, char* msj, char* msjEr
 }
 
 /*
- * \brief utn_getChar : Pide al usuario una letra.
+ * \brief getChar : Pide al usuario una letra.
  * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
  * \param msg: El mensaje que imprime para pedir un valor
  * \param msgError: El mensaje que imprime si el rango no es valido
@@ -186,7 +186,7 @@ int utn_getFloatConRango(float* pValor, int min, int max, char* msj, char* msjEr
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-int utn_getChar(char* pValor,char* msj, char* msjError, int intentos)
+int getChar(char* pValor,char* msj, char* msjError, int intentos)
 {
 	int retorno = -1;
 	char letra;
@@ -217,14 +217,14 @@ int utn_getChar(char* pValor,char* msj, char* msjError, int intentos)
 }
 
 /*
- * \brief suma : suma dos numeros float previamente guardados.
+ * \brief getSuma : suma dos numeros float previamente guardados.
  * \param numeroUno: primer variable de la suma.
  * \param numeroDos: segunda variable de la suma.
  * \param * resultado: Direccion de memoria de la variable donde escribe el valor de la suma.
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-int suma (float numeroUno, float numeroDos, float* resultado)
+int getSuma (float numeroUno, float numeroDos, float* resultado)
 {
 	int retorno = -1;
 	if(resultado != NULL)
@@ -236,14 +236,14 @@ int suma (float numeroUno, float numeroDos, float* resultado)
 }
 
 /*
- * \brief resta : resta dos numeros float previamente guardados.
+ * \brief getResta : resta dos numeros float previamente guardados.
  * \param numeroUno: primer variable de la resta.
  * \param numeroDos: segunda variable de la resta.
  * \param * resultado: Direccion de memoria de la variable donde escribe el valor de la resta.
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-int resta(float numeroUno, float numeroDos, float* resultado)
+int getResta(float numeroUno, float numeroDos, float* resultado)
 {
 	int retorno = -1;
 	if(resultado != NULL)
@@ -255,14 +255,14 @@ int resta(float numeroUno, float numeroDos, float* resultado)
 }
 
 /*
- * \brief multiplicacion : multiplica dos numeros float previamente guardados.
+ * \brief getMultiplicacion : multiplica dos numeros float previamente guardados.
  * \param numeroUno: primer variable de la multiplicacion.
  * \param numeroDos: segunda variable de la multiplicacion.
  * \param * resultado: Direccion de memoria de la variable donde escribe el valor de la multiplicacion.
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-int multiplicacion(float numeroUno, float numeroDos, float* resultado)
+int getMultiplicacion(float numeroUno, float numeroDos, float* resultado)
 {
 	int retorno = -1;
 	if(resultado != NULL)
@@ -274,14 +274,14 @@ int multiplicacion(float numeroUno, float numeroDos, float* resultado)
 }
 
 /*
- * \brief division : divide dos numeros float previamente guardados.
+ * \brief getDivision : divide dos numeros float previamente guardados.
  * \param numeroUno: variable dividendo.
  * \param numeroDos: variable divisor.
  * \param * resultado: Direccion de memoria de la variable donde escribe el valor de la division.
  * \return retorno: 0: si esta OK. -1: Si hubo un error o se intento dividir por 0.
  */
 
-int division(float numeroUno, float numeroDos, float* resultado)
+int getDivision(float numeroUno, float numeroDos, float* resultado)
 {
 	int retorno = -1;
 	if(resultado != NULL && numeroDos != 0)
@@ -293,13 +293,13 @@ int division(float numeroUno, float numeroDos, float* resultado)
 }
 
 /*
- * \brief factorial : devuelve el factorial de un numero float previamente guardado.
+ * \brief getFactorial : devuelve el factorial de un numero float previamente guardado.
  * \param numero: variable a calcularle su factorial.
  * \param * resultado: Direccion de memoria de la variable donde escribe el valor del factorial.
  * \return retorno: 0: si esta OK. -1: Si hubo un error o se intento calcular el factorial de un numero negativo
  */
 
-int factorial(float numero,float* resultado)
+int getFactorial(float numero,float* resultado)
 {
 	int retorno = -1;
 
