@@ -21,5 +21,7 @@ int suma (float numeroUno, float numeroDos, float *resultado);
 int resta (float numeroUno, float numeroDos, float *resultado);
 int multiplicacion (float numeroUno, float numeroDos, float *resultado);
 int division (float numeroUno, float numeroDos, float *resultado);
+int factorial(float numero,float* resultado);
+
 
 #endif /* UTN_H_ */

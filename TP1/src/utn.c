@@ -27,25 +27,28 @@ int utn_getEntero(int* pValor, char* msj, char* msjError, int intentos)
 	int num;
 	int retornoScanf;
 
-	do
+	if(pValor != NULL && msj != NULL && msjError != NULL)
 	{
-		printf("%s", msj);
-		__fpurge(stdin);
-		retornoScanf = scanf( "%d" ,&num);
-		if(retornoScanf == 1)
+		do
 		{
-			*pValor = num;
-			retorno = 0;
-			break;
-		}
-		intentos--;
-		if(intentos == 0)
-		{
-			printf("\nSe agotaron los intentos");
-			break;
-		}
-		printf("%s Te quedan %d reintentos.", msjError,intentos);
-	}while(intentos > 0);
+			printf("%s", msj);
+			__fpurge(stdin);
+			retornoScanf = scanf( "%d" ,&num);
+			if(retornoScanf == 1)
+			{
+				*pValor = num;
+				retorno = 0;
+				break;
+			}
+			intentos--;
+			if(intentos == 0)
+			{
+				printf("\nSe agotaron los intentos");
+				break;
+			}
+			printf("%s Te quedan %d reintentos.", msjError,intentos);
+		}while(intentos > 0);
+	}
 
 	return retorno;
 }
@@ -67,26 +70,28 @@ int utn_getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjErr
 	int num;
 	int retornoScanf;
 
-	do
+	if(pValor != NULL && msj != NULL && msjError != NULL)
 	{
-		printf("%s", msj);
-		__fpurge(stdin);
-		retornoScanf = scanf( "%d" ,&num);
-		if(retornoScanf == 1 && num >= min && num <= max)
+		do
 		{
-			*pValor = num;
-			retorno = 0;
-			break;
-		}
-		intentos--;
-		if(intentos == 0)
-		{
-			printf("\nSe agotaron los intentos");
-			break;
-		}
-		printf("%s Te quedan %d reintentos.", msjError,intentos);
-	}while(intentos > 0);
-
+			printf("%s", msj);
+			__fpurge(stdin);
+			retornoScanf = scanf( "%d" ,&num);
+			if(retornoScanf == 1 && num >= min && num <= max)
+			{
+				*pValor = num;
+				retorno = 0;
+				break;
+			}
+			intentos--;
+			if(intentos == 0)
+			{
+				printf("\nSe agotaron los intentos");
+				break;
+			}
+			printf("%s Te quedan %d reintentos.", msjError,intentos);
+		}while(intentos > 0);
+	}
 	return retorno;
 }
 
@@ -105,26 +110,28 @@ int utn_getFloat(float* pValor, char* msj, char* msjError, int intentos)
 	float num;
 	int retornoScanf;
 
-	do
+	if(pValor != NULL && msj != NULL && msjError != NULL)
 	{
-		printf("%s", msj);
-		__fpurge(stdin);
-		retornoScanf = scanf( "%f" ,&num);
-		if(retornoScanf == 1)
+		do
 		{
-			*pValor = num;
-			retorno = 0;
-			break;
-		}
-		intentos--;
-		if(intentos == 0)
-		{
-			printf("\nSe agotaron los intentos");
-			break;
-		}
-		printf("%s te quedan %d reintentos.", msjError,intentos);
-	}while(intentos > 0);
-
+			printf("%s", msj);
+			__fpurge(stdin);
+			retornoScanf = scanf( "%f" ,&num);
+			if(retornoScanf == 1)
+			{
+				*pValor = num;
+				retorno = 0;
+				break;
+			}
+			intentos--;
+			if(intentos == 0)
+			{
+				printf("\nSe agotaron los intentos");
+				break;
+			}
+			printf("%s te quedan %d reintentos.", msjError,intentos);
+		}while(intentos > 0);
+	}
 	return retorno;
 }
 
@@ -145,26 +152,28 @@ int utn_getFloatConRango(float* pValor, int min, int max, char* msj, char* msjEr
 	float num;
 	int retornoScanf;
 
-	do
+	if(pValor != NULL && msj != NULL && msjError != NULL)
 	{
-		printf("%s", msj);
-		__fpurge(stdin);
-		retornoScanf = scanf( "%f" ,&num);
-		if(retornoScanf == 1 && num >= min && num <= max)
+		do
 		{
-			*pValor = num;
-			retorno = 0;
-			break;
-		}
-		intentos--;
-		if(intentos == 0)
-		{
-			printf("\nSe agotaron los intentos");
-			break;
-		}
-		printf("%s Te quedan %d reintentos.", msjError,intentos);
-	}while(intentos > 0);
-
+			printf("%s", msj);
+			__fpurge(stdin);
+			retornoScanf = scanf( "%f" ,&num);
+			if(retornoScanf == 1 && num >= min && num <= max)
+			{
+				*pValor = num;
+				retorno = 0;
+				break;
+			}
+			intentos--;
+			if(intentos == 0)
+			{
+				printf("\nSe agotaron los intentos");
+				break;
+			}
+			printf("%s Te quedan %d reintentos.", msjError,intentos);
+		}while(intentos > 0);
+	}
 	return retorno;
 }
 
@@ -177,37 +186,45 @@ int utn_getFloatConRango(float* pValor, int min, int max, char* msj, char* msjEr
  * \return retorno: 0: si esta OK. -1: Si hubo un error
  */
 
-//DOCUMENTAR ESTAS FUNCIONES
-
 int utn_getChar(char* pValor,char* msj, char* msjError, int intentos)
 {
 	int retorno = -1;
 	char letra;
 
-	do
+	if(pValor != NULL && msj != NULL && msjError != NULL)
 	{
-		printf("%s", msj);
-		__fpurge(stdin);
-		scanf( "%c" ,&letra);
-		if(isalpha(letra) != 0)
+		do
 		{
-			*pValor = letra;
-			retorno = 0;
-			break;
-		}
-		intentos--;
-		if(intentos == 0)
-		{
-			printf("\nSe agotaron los intentos");
-			break;
-		}
-		printf("%s Te quedan %d reintentos.", msjError,intentos);
-	}while(intentos > 0);
-
+			printf("%s", msj);
+			__fpurge(stdin);
+			scanf( "%c" ,&letra);
+			if(isalpha(letra) != 0)
+			{
+				*pValor = letra;
+				retorno = 0;
+				break;
+			}
+			intentos--;
+			if(intentos == 0)
+			{
+				printf("\nSe agotaron los intentos");
+				break;
+			}
+			printf("%s Te quedan %d reintentos.", msjError,intentos);
+		}while(intentos > 0);
+	}
 	return retorno;
 }
 
-int suma (float numeroUno, float numeroDos, float *resultado)
+/*
+ * \brief suma : suma dos numeros float previamente guardados.
+ * \param numeroUno: primer variable de la suma.
+ * \param numeroDos: segunda variable de la suma.
+ * \param * resultado: Direccion de memoria de la variable donde escribe el valor de la suma.
+ * \return retorno: 0: si esta OK. -1: Si hubo un error
+ */
+
+int suma (float numeroUno, float numeroDos, float* resultado)
 {
 	int retorno = -1;
 	if(resultado != NULL)
@@ -218,7 +235,15 @@ int suma (float numeroUno, float numeroDos, float *resultado)
 	return retorno;
 }
 
-int resta (float numeroUno, float numeroDos, float *resultado)
+/*
+ * \brief resta : resta dos numeros float previamente guardados.
+ * \param numeroUno: primer variable de la resta.
+ * \param numeroDos: segunda variable de la resta.
+ * \param * resultado: Direccion de memoria de la variable donde escribe el valor de la resta.
+ * \return retorno: 0: si esta OK. -1: Si hubo un error
+ */
+
+int resta(float numeroUno, float numeroDos, float* resultado)
 {
 	int retorno = -1;
 	if(resultado != NULL)
@@ -229,7 +254,15 @@ int resta (float numeroUno, float numeroDos, float *resultado)
 	return retorno;
 }
 
-int multiplicacion (float numeroUno, float numeroDos, float *resultado)
+/*
+ * \brief multiplicacion : multiplica dos numeros float previamente guardados.
+ * \param numeroUno: primer variable de la multiplicacion.
+ * \param numeroDos: segunda variable de la multiplicacion.
+ * \param * resultado: Direccion de memoria de la variable donde escribe el valor de la multiplicacion.
+ * \return retorno: 0: si esta OK. -1: Si hubo un error
+ */
+
+int multiplicacion(float numeroUno, float numeroDos, float* resultado)
 {
 	int retorno = -1;
 	if(resultado != NULL)
@@ -240,13 +273,55 @@ int multiplicacion (float numeroUno, float numeroDos, float *resultado)
 	return retorno;
 }
 
-int division (float numeroUno, float numeroDos, float *resultado)
+/*
+ * \brief division : divide dos numeros float previamente guardados.
+ * \param numeroUno: variable dividendo.
+ * \param numeroDos: variable divisor.
+ * \param * resultado: Direccion de memoria de la variable donde escribe el valor de la division.
+ * \return retorno: 0: si esta OK. -1: Si hubo un error o se intento dividir por 0.
+ */
+
+int division(float numeroUno, float numeroDos, float* resultado)
 {
 	int retorno = -1;
 	if(resultado != NULL && numeroDos != 0)
 	{
 		*resultado = numeroUno / numeroDos;
 		retorno = 0;
+	}
+	return retorno;
+}
+
+/*
+ * \brief factorial : devuelve el factorial de un numero float previamente guardado.
+ * \param numero: variable a calcularle su factorial.
+ * \param * resultado: Direccion de memoria de la variable donde escribe el valor del factorial.
+ * \return retorno: 0: si esta OK. -1: Si hubo un error o se intento calcular el factorial de un numero negativo
+ */
+
+int factorial(float numero,float* resultado)
+{
+	int retorno = -1;
+
+	int contador;
+	int factorial = 1;
+
+	if(resultado != NULL )
+	{
+		if(numero == 0)
+		{
+			*resultado = 1;
+			retorno = 0;
+		}
+		if(numero > 0)
+		{
+			for (contador = 1;contador <= numero;contador++)
+			{
+				factorial = (float)factorial * contador;
+			}
+			*resultado = factorial;
+			retorno = 0;
+		}
 	}
 	return retorno;
 }
