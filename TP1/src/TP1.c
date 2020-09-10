@@ -139,9 +139,9 @@ int main(void)
 									}
 									break;
 							}
+							printf("\nCalculando...\n");
+							resultadoOperaciones = 1;
 						}
-						printf("\nCalculando...\n");
-						resultadoOperaciones = 1;
 					}
 					else
 					{

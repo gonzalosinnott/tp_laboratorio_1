@@ -126,7 +126,7 @@ int getFloat(float* pValor, char* msj, char* msjError, int intentos)
 			intentos--;
 			if(intentos == 0)
 			{
-				printf("\nSe agotaron los intentos");
+				printf("\nSe agotaron los intentos\n");
 				break;
 			}
 			printf("%s te quedan %d reintentos.", msjError,intentos);
