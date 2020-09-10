@@ -46,6 +46,7 @@
 int main(void)
 {
 	int opcionIngresada;
+	int opcionOperacion;
 	int respuesta;
 	float numeroUno;
 	float numeroDos;
@@ -66,7 +67,7 @@ int main(void)
 
 	do
 	{
-		respuesta = getEnteroConRango(&opcionIngresada, 1, 5, "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Calcular todas las operaciones\n 4. Informar resultados\n 5. Salir\n\nOpcion:", "\nError, no es una opcion valida.", 3);
+		respuesta = getEnteroConRango(&opcionIngresada, 1, 5, "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Elegir operacion a calcular.\n 4. Informar resultados\n 5. Salir\n\nOpcion:", "\nError, no es una opcion valida.", 3);
 		if (respuesta == 0)
 		{
 			switch(opcionIngresada)
@@ -95,32 +96,49 @@ int main(void)
 				case 3:
 					if(ingresoNumeroUno == 1 && ingresoNumeroDos == 1)
 					{
-						if(getSuma(numeroUno,numeroDos,&resultado) == 0)
+						respuesta = getEnteroConRango(&opcionOperacion, 1, 5, "\nIngrese una opcion:\n 1. Sumar\n 2. Restar\n 3. Multiplicar\n 4. Dividir\n 5. Factorial\n\nOpcion:", "\nError, no es una opcion valida.", 3);
+						if (respuesta == 0)
 						{
-							resultadoSuma = resultado;
-						}
-						if(getResta(numeroUno,numeroDos,&resultado) == 0)
-						{
-							resultadoResta = resultado;
-						}
-						if(getMultiplicacion(numeroUno,numeroDos,&resultado) == 0)
-						{
-							resultadoMultiplicacion = resultado;
-						}
-						if(getDivision(numeroUno,numeroDos,&resultado) == 0)
-						{
-							resultadoDivision = resultado;
-							divisionPorCero = 0;
-						}
-						if(getFactorial(numeroUno, &resultado) == 0)
-						{
-							resultadoFactorialUno = resultado;
-							factorialNegativoUno = 0;
-						}
-						if(getFactorial(numeroDos, &resultado) == 0)
-						{
-							resultadoFactorialDos = resultado;
-							factorialNegativoDos = 0;
+							switch(opcionOperacion)
+							{
+								case 1:
+									if(getSuma(numeroUno,numeroDos,&resultado) == 0)
+									{
+										resultadoSuma = resultado;
+									}
+									break;
+								case 2:
+									if(getResta(numeroUno,numeroDos,&resultado) == 0)
+									{
+										resultadoResta = resultado;
+									}
+									break;
+								case 3:
+									if(getMultiplicacion(numeroUno,numeroDos,&resultado) == 0)
+									{
+										resultadoMultiplicacion = resultado;
+									}
+									break;
+								case 4:
+									if(getDivision(numeroUno,numeroDos,&resultado) == 0)
+									{
+										resultadoDivision = resultado;
+										divisionPorCero = 0;
+									}
+									break;
+								case 5:
+									if(getFactorial(numeroUno, &resultado) == 0)
+									{
+									resultadoFactorialUno = resultado;
+									factorialNegativoUno = 0;
+									}
+									if(getFactorial(numeroDos, &resultado) == 0)
+									{
+									resultadoFactorialDos = resultado;
+									factorialNegativoDos = 0;
+									}
+									break;
+							}
 						}
 						printf("\nCalculando...\n");
 						resultadoOperaciones = 1;
@@ -133,34 +151,46 @@ int main(void)
 				case 4:
 					if(resultadoOperaciones == 1)
 					{
-						printf("\nEl resultado de %.2f + %.2f es: %.2f",numeroUno,numeroDos,resultadoSuma);
-						printf("\nEl resultado de %.2f - %.2f es: %.2f",numeroUno,numeroDos,resultadoResta);
-						printf("\nEl resultado de %.2f * %.2f es: %.2f",numeroUno,numeroDos,resultadoMultiplicacion);
-						if(divisionPorCero == 0)
+						switch(opcionOperacion)
 						{
-							printf("\nEl resultado de la division es: %.2f", resultadoDivision);
+							case 1:
+								printf("\nEl resultado de %.2f + %.2f es: %.2f",numeroUno,numeroDos,resultadoSuma);
+								break;
+							case 2:
+								printf("\nEl resultado de %.2f - %.2f es: %.2f",numeroUno,numeroDos,resultadoResta);
+								break;
+							case 3:
+								printf("\nEl resultado de %.2f * %.2f es: %.2f",numeroUno,numeroDos,resultadoMultiplicacion);
+								break;
+							case 4:
+								if(divisionPorCero == 0)
+								{
+									printf("\nEl resultado de la division es: %.2f", resultadoDivision);
+								}
+								else
+								{
+									printf("\nNo se puede dividir por 0.");
+								}
+								break;
+							case 5:
+								if(factorialNegativoUno == 0)
+								{
+									printf("\nEl factorial de %.2f es: %d",numeroUno, resultadoFactorialUno);
+								}
+								else
+								{
+									printf("\nNo es posible calcular el factorial de %.2f porque es un numero negativo.",numeroUno);
+								}
+								if(factorialNegativoDos == 0)
+								{
+									printf("\nEl factorial de %.2f es: %d\n",numeroDos, resultadoFactorialDos);
+								}
+								else
+								{
+									printf("\nNo es posible calcular el factorial de %.2f porque es un numero negativo.\n",numeroDos);
+								}
+								break;
 						}
-						else
-						{
-							printf("\nNo se puede dividir por 0.");
-						}
-						if(factorialNegativoUno == 0)
-						{
-							printf("\nEl factorial de %.2f es: %d",numeroUno, resultadoFactorialUno);
-						}
-						else
-						{
-							printf("\nNo es posible calcular el factorial de %.2f porque es un numero negativo.",numeroUno);
-						}
-						if(factorialNegativoDos == 0)
-						{
-							printf("\nEl factorial de %.2f es: %d\n",numeroDos, resultadoFactorialDos);
-						}
-						else
-						{
-							printf("\nNo es posible calcular el factorial de %.2f porque es un numero negativo.\n",numeroDos);
-						}
-
 						do
 						{
 							printf("\n¿Desea realizar otra operacion? (y/n)\n");
