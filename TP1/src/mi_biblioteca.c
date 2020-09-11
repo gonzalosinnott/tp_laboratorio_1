@@ -325,3 +325,126 @@ int getFactorial(float numero,float* resultado)
 	}
 	return retorno;
 }
+
+/*
+ * \brief getOperaciones: submenu para calcular operaciones
+ * \param opcionOperacion: variable ingresada por el usuario para elegir que operacion calcular.
+ * \param numeroUno: primer variable operacion.
+ * \param numeroDos: segunda variable de la operacion.
+ * \param * resultadoOperacion1: Direccion de memoria de la variable donde escribe el resultado de la operacion.
+ * \param * resultadoOperacion2: Direccion de memoria de la variable donde escribe el resultado de la operacion en el caso de que haya dso resultados.
+ * \param * errorOperacion1: Direccion de memoria de la variable donde escribe la validacion de que la operacion se puede realizar.
+ * \param * errorOperacion2: Direccion de memoria de la variable donde escribe la  segunda validacion, en caso de ser necesaria,de que la operacion se puede realizar.
+ * \return retorno: 0: si esta OK. -1: Si hubo un error o se intento calcular el factorial de un numero negativo
+ */
+
+int getOperaciones(int opcionOperacion, float numeroUno, float numeroDos, float* resultadoOperacion1, float* resultadoOperacion2, int* errorOperacion1, int* errorOperacion2)
+{
+	int retorno = -1;
+	float resultado;
+
+	if(resultadoOperacion1 != NULL && resultadoOperacion2 != NULL && errorOperacion1 != NULL && errorOperacion2 != NULL)
+	{
+		switch(opcionOperacion)
+		{
+			case 1:
+				if(getSuma(numeroUno,numeroDos,&resultado) == 0)
+				{
+					*resultadoOperacion1 = resultado;
+				}
+				break;
+			case 2:
+				if(getResta(numeroUno,numeroDos,&resultado) == 0)
+				{
+					*resultadoOperacion1 = resultado;
+				}
+				break;
+			case 3:
+				if(getMultiplicacion(numeroUno,numeroDos,&resultado) == 0)
+				{
+					*resultadoOperacion1 = resultado;
+				}
+				break;
+			case 4:
+				if(getDivision(numeroUno,numeroDos,&resultado) == 0)
+				{
+					*resultadoOperacion1 = resultado;
+					*errorOperacion1 = 0;
+				}
+				break;
+			case 5:
+				if(getFactorial(numeroUno, &resultado) == 0)
+				{
+					*resultadoOperacion1 = resultado;
+					*errorOperacion1 = 0;
+				}
+				if(getFactorial(numeroDos, &resultado) == 0)
+				{
+					*resultadoOperacion2 = resultado;
+					*errorOperacion2 = 0;
+				}
+				break;
+		}
+		retorno = 0;
+	}
+	return retorno;
+}
+
+/*
+ * \brief printResultados: Imprime el resultado de la operacion elegida por el usuario
+ * \param opcionOperacion: variable ingresada por el usuario para elegir que operacion calcular.
+ * \param numeroUno: primer variable operacion.
+ * \param numeroDos: segunda variable de la operacion.
+ * \param resultadoOperacion1: resultado de la operacion.
+ * \param resultadoOperacion2: segundo resultado de la operacion en el caso de que haya dos resultados.
+ * \param errorOperacion1: validacion de que la operacion se puede realizar.
+ * \param errorOperacion2: segunda validacion, en caso de ser necesaria,de que la operacion se puede realizar.
+ * \return retorno: 0: si esta OK. -1: Si hubo un error o se intento calcular el factorial de un numero negativo
+ */
+
+int printResultados(int opcionOperacion, float numeroUno, float numeroDos, float resultadoOperacion1, float resultadoOperacion2, int errorOperacion1, int errorOperacion2)
+{
+	int retorno = -1;
+	switch(opcionOperacion)
+	{
+		case 1:
+			printf("\nEl resultado de %.2f + %.2f es: %.2f",numeroUno,numeroDos,resultadoOperacion1);
+			break;
+		case 2:
+			printf("\nEl resultado de %.2f - %.2f es: %.2f",numeroUno,numeroDos,resultadoOperacion1);
+			break;
+		case 3:
+			printf("\nEl resultado de %.2f * %.2f es: %.2f",numeroUno,numeroDos,resultadoOperacion1);
+			break;
+		case 4:
+			if(errorOperacion1 == 0)
+			{
+				printf("\nEl resultado de la division es: %.2f", resultadoOperacion1);
+			}
+			else
+			{
+				printf("\nNo se puede dividir por 0.");
+			}
+			break;
+		case 5:
+			if(errorOperacion1 == 0)
+			{
+				printf("\nEl factorial de %.2f es: %.2f",numeroUno, resultadoOperacion1);
+			}
+			else
+			{
+				printf("\nNo es posible calcular el factorial de %.2f porque es un numero negativo.",numeroUno);
+			}
+			if(errorOperacion2 == 0)
+			{
+				printf("\nEl factorial de %.2f es: %.2f\n",numeroDos, resultadoOperacion2);
+			}
+			else
+			{
+				printf("\nNo es posible calcular el factorial de %.2f porque es un numero negativo.\n",numeroDos);
+			}
+			break;
+	}
+	retorno = 0;
+	return retorno;
+}

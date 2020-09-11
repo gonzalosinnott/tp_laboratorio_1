@@ -23,5 +23,7 @@ int getMultiplicacion (float numeroUno, float numeroDos, float *resultado);
 int getDivision (float numeroUno, float numeroDos, float *resultado);
 int getFactorial(float numero,float* resultado);
 
+int getOperaciones(int opcionOperacion, float numeroUno, float numeroDos, float* resultadoOperacion1, float* resultadoOperacion2, int* errorOperacion1, int* errorOperacion2);
+int printResultados(int opcionOperacion, float numeroUno, float numeroDos, float resultadoOperacion1, float resultadoOperacion2, int errorOperacion1, int errorOperacion2);
 
 #endif /* MI_BIBLIOTECA_H_ */
