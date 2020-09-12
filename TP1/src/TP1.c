@@ -1,7 +1,7 @@
 /*
  ============================================================================
  Name        : TP1.c
- Author      : Gonzalo Sinnott
+ Author      : Gonzalo Sinnott Segura
  Version     :
  Copyright   : 
  Description : Hacer una calculadora.
@@ -41,16 +41,20 @@
 int main(void)
 {
 	int opcionIngresada;
-	int opcionOperacion;
 	float numeroUno;
 	float numeroDos;
 	int	ingresoNumeroUno = 0;
 	int	ingresoNumeroDos = 0;
 	int calculoOperaciones = 0;
-	float resultadoOperacion1;
-	float resultadoOperacion2;
-	int errorOperacion1 = 1;
-	int errorOperacion2 = 1;
+	float resultadoSuma;
+	float resultadoResta;
+	float resultadoMultiplicacion;
+	float resultadoDivision;
+	int resultadoFactorialUno;
+	int resultadoFactorialDos;
+	int errorDivision = 1;
+	int errorFactorialUno = 1;
+	int errorFactorialDos = 1;
 	char respuestaOtraOperacion;
 
 	do
@@ -83,12 +87,9 @@ int main(void)
 				case 3:
 					if(ingresoNumeroUno == 1 && ingresoNumeroDos == 1)
 					{
-						if( getEnteroConRango(&opcionOperacion, 1, 5, "\nIngrese una opcion:\n 1. Sumar\n 2. Restar\n 3. Multiplicar\n 4. Dividir\n 5. Factorial\n\nOpcion:", "\nError, no es una opcion valida.", 3)==0)
-						{
-							getOperaciones(opcionOperacion, numeroUno, numeroDos, &resultadoOperacion1, &resultadoOperacion2, &errorOperacion1, &errorOperacion2);
-							printf("\nCalculando...\n");
-							calculoOperaciones = 1;
-						}
+						getOperaciones(numeroUno, numeroDos, &resultadoSuma, &resultadoResta, &resultadoMultiplicacion, &resultadoDivision, &resultadoFactorialUno, &resultadoFactorialDos, &errorDivision, &errorFactorialUno, &errorFactorialDos);
+						printf("\nCalculando...\n");
+						calculoOperaciones = 1;
 					}
 					else
 					{
@@ -98,7 +99,7 @@ int main(void)
 				case 4:
 					if(calculoOperaciones == 1)
 					{
-						printResultados(opcionOperacion, numeroUno, numeroDos, resultadoOperacion1, resultadoOperacion2, errorOperacion1, errorOperacion2);
+						printResultados(numeroUno, numeroDos, resultadoSuma, resultadoResta, resultadoMultiplicacion, resultadoDivision, resultadoFactorialUno, resultadoFactorialDos, errorDivision, errorFactorialUno, errorFactorialDos);
 						do
 						{
 							printf("\n¿Desea realizar otra operacion? (y/n)\n");
@@ -109,6 +110,15 @@ int main(void)
 						{
 							printf("\nPrograma terminado.");
 							return EXIT_SUCCESS;
+						}
+						else
+						{
+							ingresoNumeroUno = 0;
+							ingresoNumeroDos = 0;
+							calculoOperaciones = 0;
+							errorDivision = 1;
+							errorFactorialUno = 1;
+							errorFactorialDos = 1;
 						}
 					}
 					else
