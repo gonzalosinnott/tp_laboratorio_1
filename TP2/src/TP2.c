@@ -34,19 +34,22 @@ int main(void){
 	int firstLoad = FALSE;
 	int idToSearch;
 	int indexToModify;
+	int sortOrder;
 
-	Employee arrayEmployees[QTY_EMPLOYEES];
+	sEmployee arrayEmployees[QTY_EMPLOYEES];
 
 	initEmployees(arrayEmployees, QTY_EMPLOYEES);
 	do
 	{
+		//PASAR SOLO MENU A UNA FUNCION APARTE
 		utn_getInt("\nIngrese una opcion:"
 				   "\n 1-Alta de empleado."
 			       "\n 2-Modificar datos de empleado."
 				   "\n 3-Baja de empleado."
 			       "\n 4-Informe de personal."
 				   "\n 5-Salir"
-				   "\nOpcion:", "\nError.", &choosenOption, 3, 5, 1);
+		           "\nOpcion:", "\nError.", &choosenOption, 3, 5, 1);
+		//MODIFICAR EL SWITCH PARA QUE EL ERROR SOLO LO PONGA UNA VEZ
 		switch(choosenOption)
 		{
 			case 1:
@@ -97,7 +100,13 @@ int main(void){
 				//INFORME (FUNCIONA IMPRIMIR, FALTA SORT)
 				if(firstLoad == TRUE)
 				{
-					printEmployees(arrayEmployees, QTY_EMPLOYEES);
+					utn_getInt("\n1- Orden Descendente"
+					   	       "\n2- Orden Ascendente"
+						       "\nOpcion:","Error. ",&sortOrder,3,2,1);
+
+						sortEmployees(arrayEmployees, QTY_EMPLOYEES,sortOrder);
+						printEmployees(arrayEmployees, QTY_EMPLOYEES);
+
 				}
 				else
 				{
