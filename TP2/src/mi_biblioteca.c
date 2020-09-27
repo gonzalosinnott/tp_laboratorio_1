@@ -51,7 +51,7 @@ int utn_getInt(char* msj, char* errorMsj, int* pValue,int retries,int max,int mi
 			}
 			else
 			{
-				printf("%s Quedan %d reintentos",errorMsj, retries);
+				printf("%s Quedan %d reintentos\n",errorMsj, retries);
 				retries--;
 			}
 		}while(retries >= 0);
@@ -127,7 +127,7 @@ int utn_getString(char* msj, char* errorMsj, char* pValue,int retries, int len)
 			}
 			else
 			{
-				printf("%s Quedan %d reintentos",errorMsj, retries);
+				printf("%s Quedan %d reintentos\n",errorMsj, retries);
 				retries--;
 			}
 		}while(retries >= 0);
@@ -160,7 +160,7 @@ static int utn_checkString(char* string,int len)
 	return retorno;
 }
 
-/*
+/**
  * \brief myGets: Reads from stdin until a '\n' (finalization character)
  *  or until it has copied a string of a length of lenght - 1 characters .
  * \param char *string: Pointer to memory space where string will be copied
@@ -176,7 +176,7 @@ static int myGets(char *string, int len)
 	return 0;
 }
 
-/*
+/**
  * \brief utn_getChar : Ask the user to choose between two letters
  * \param char* msj: Message for the user
  * \param char* errorMsj: Error message
@@ -193,7 +193,7 @@ int utn_getChar(char* msj,char* errorMsj,char* pValue,char valueOne,char valueTw
 	char bufferChar;
 	int resultadoScan;
 
-	if(msj != NULL && errorMsj != NULL &&  pValue != NULL && valueOne != NULL && valueTwo != NULL && retries > 0)
+	if(msj != NULL && errorMsj != NULL &&  pValue != NULL && retries > 0)
 	{
 		do{
 			printf("%s", msj);
@@ -207,7 +207,7 @@ int utn_getChar(char* msj,char* errorMsj,char* pValue,char valueOne,char valueTw
 			}
 			else
 			{
-				printf("%s Te quedan %d reintentos.", errorMsj,retries);
+				printf("%s Te quedan %d reintentos.\n", errorMsj,retries);
 				retries--;
 			}
 		}while(retries >= 0);

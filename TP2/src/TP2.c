@@ -32,34 +32,22 @@ int main(void){
 	int choosenOption;
 	int emptyIndex;
 	int firstLoad = FALSE;
-	int idToSearch;
-	int indexToModify;
-	int sortOrder;
 
 	sEmployee arrayEmployees[QTY_EMPLOYEES];
 
 	initEmployees(arrayEmployees, QTY_EMPLOYEES);
+
 	do
 	{
-		//PASAR SOLO MENU A UNA FUNCION APARTE
-		utn_getInt("\nIngrese una opcion:"
-				   "\n 1-Alta de empleado."
-			       "\n 2-Modificar datos de empleado."
-				   "\n 3-Baja de empleado."
-			       "\n 4-Informe de personal."
-				   "\n 5-Salir"
-		           "\nOpcion:", "\nError.", &choosenOption, 3, 5, 1);
-		//MODIFICAR EL SWITCH PARA QUE EL ERROR SOLO LO PONGA UNA VEZ
+		getEmployeeMenu(&choosenOption);
 		switch(choosenOption)
 		{
 			case 1:
-				//ALTA (FUNCIONA)
+				//ALTA
 				if(checkFirstEmptyIndex(arrayEmployees, QTY_EMPLOYEES, &emptyIndex)==0)
 				{
-					if(loadEmployeeData(arrayEmployees, QTY_EMPLOYEES, emptyIndex)==0)
-					{
-						firstLoad = TRUE;
-					}
+					loadEmployeeData(arrayEmployees, QTY_EMPLOYEES, emptyIndex);
+					firstLoad = TRUE;
 				}
 				else
 				{
@@ -67,14 +55,10 @@ int main(void){
 				}
 				break;
 			case 2:
-				//MODIFICAR(FUNCIONA)
+				//MODIFICAR
 				if(firstLoad == TRUE)
 				{
-					if(utn_getInt("Ingrese el ID a modificar:","Error. ",&idToSearch,3,1000,1)==0 &&
-					   findEmployeeById(arrayEmployees, QTY_EMPLOYEES, &indexToModify, idToSearch)==0)
-					{
-					   modifyEmployee(arrayEmployees, QTY_EMPLOYEES, indexToModify, idToSearch);
-					}
+					   modifyEmployee(arrayEmployees, QTY_EMPLOYEES);
 				}
 				else
 				{
@@ -82,14 +66,10 @@ int main(void){
 				}
 				break;
 			case 3:
-				//BAJA(FUNCIONA)
+				//BAJA
 				if(firstLoad == TRUE)
 				{
-					if(utn_getInt("Ingrese el ID a eliminar:","Error. ",&idToSearch,3,1000,1)==0 &&
-					   findEmployeeById(arrayEmployees, QTY_EMPLOYEES, &indexToModify, idToSearch)==0)
-					{
-					   removeEmployee(arrayEmployees, QTY_EMPLOYEES, indexToModify, idToSearch);
-					}
+					removeEmployee(arrayEmployees, QTY_EMPLOYEES, &firstLoad);
 				}
 				else
 				{
@@ -97,16 +77,10 @@ int main(void){
 				}
 				break;
 			case 4:
-				//INFORME (FUNCIONA IMPRIMIR, FALTA SORT)
+				//INFORME
 				if(firstLoad == TRUE)
 				{
-					utn_getInt("\n1- Orden Descendente"
-					   	       "\n2- Orden Ascendente"
-						       "\nOpcion:","Error. ",&sortOrder,3,2,1);
-
-						sortEmployees(arrayEmployees, QTY_EMPLOYEES,sortOrder);
-						printEmployees(arrayEmployees, QTY_EMPLOYEES);
-
+					sortEmployees(arrayEmployees, QTY_EMPLOYEES);
 				}
 				else
 				{

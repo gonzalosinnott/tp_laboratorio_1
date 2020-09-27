@@ -14,7 +14,7 @@
 #define TRUE 1
 #define FALSE 0
 #define LONG_NAME 51
-#define QTY_EMPLOYEES 4
+#define QTY_EMPLOYEES 5
 
 typedef struct
 {
@@ -26,13 +26,15 @@ typedef struct
 	int isEmpty;
 }sEmployee;
 
+int getEmployeeMenu(int* choosenOption);
 int initEmployees(sEmployee* list, int len);
 int checkFirstEmptyIndex(sEmployee* list, int len, int *emptyIndex);
 int loadEmployeeData(sEmployee* list,int len, int index);
-int findEmployeeById(sEmployee* list, int len,int* index, int id);
-int modifyEmployee(sEmployee* list, int len,int index, int id);
-int removeEmployee(sEmployee* list, int len,int index, int id);
-int sortEmployees(sEmployee* list, int len, int order);
-int printEmployees(sEmployee* list, int len);
+int modifyEmployee(sEmployee* list, int len);
+int removeEmployee(sEmployee* list, int len,int *thereIsData);
+int sortEmployees(sEmployee* list, int len);
+
+
+
 
 #endif /* ARRAYEMPLOYEES_H_ */
