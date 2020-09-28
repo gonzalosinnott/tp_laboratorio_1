@@ -1,4 +1,4 @@
-/*
+/**
  ============================================================================
  Name        : mi_biblioteca.c
  Author      : Gonzalo Sinnott Segura
@@ -14,7 +14,7 @@
 #define TRUE 1
 #define FALSE 0
 #define LONG_NAME 51
-#define QTY_EMPLOYEES 5
+#define QTY_EMPLOYEES 1000
 
 typedef struct
 {
@@ -28,13 +28,9 @@ typedef struct
 
 int getEmployeeMenu(int* choosenOption);
 int initEmployees(sEmployee* list, int len);
-int checkFirstEmptyIndex(sEmployee* list, int len, int *emptyIndex);
-int loadEmployeeData(sEmployee* list,int len, int index);
-int modifyEmployee(sEmployee* list, int len);
-int removeEmployee(sEmployee* list, int len,int *thereIsData);
-int sortEmployees(sEmployee* list, int len);
-
-
-
+int loadEmployeeData(sEmployee* list,int len, int *firstLoad);
+int modifyEmployee(sEmployee* list, int len, int firstLoad);
+int removeEmployee(sEmployee* list, int len,int *firstLoad);
+int sortEmployees(sEmployee* list, int len, int firstLoad);
 
 #endif /* ARRAYEMPLOYEES_H_ */

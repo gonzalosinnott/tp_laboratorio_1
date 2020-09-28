@@ -1,4 +1,4 @@
-/*
+/**
  ============================================================================
  Name        : TP2.c
  Author      : Gonzalo Sinnott
@@ -24,68 +24,29 @@
 #include "mi_biblioteca.h"
 #include "ArrayEmployees.h"
 
-#define TRUE 1
-#define FALSE 0
-
 int main(void){
 
 	int choosenOption;
-	int emptyIndex;
 	int firstLoad = FALSE;
-
 	sEmployee arrayEmployees[QTY_EMPLOYEES];
 
 	initEmployees(arrayEmployees, QTY_EMPLOYEES);
-
 	do
 	{
 		getEmployeeMenu(&choosenOption);
 		switch(choosenOption)
 		{
-			case 1:
-				//ALTA
-				if(checkFirstEmptyIndex(arrayEmployees, QTY_EMPLOYEES, &emptyIndex)==0)
-				{
-					loadEmployeeData(arrayEmployees, QTY_EMPLOYEES, emptyIndex);
-					firstLoad = TRUE;
-				}
-				else
-				{
-					printf("\nNO SE PUEDEN CARGAR MAS REGISTROS.\n");
-				}
+			case 1://ALTA
+				loadEmployeeData(arrayEmployees, QTY_EMPLOYEES, &firstLoad);
 				break;
-			case 2:
-				//MODIFICAR
-				if(firstLoad == TRUE)
-				{
-					   modifyEmployee(arrayEmployees, QTY_EMPLOYEES);
-				}
-				else
-				{
-					printf("\nERROR. NO HAY DATOS INGRESADOS.\n");
-				}
+			case 2://MODIFICAR
+				modifyEmployee(arrayEmployees, QTY_EMPLOYEES,firstLoad);
 				break;
-			case 3:
-				//BAJA
-				if(firstLoad == TRUE)
-				{
-					removeEmployee(arrayEmployees, QTY_EMPLOYEES, &firstLoad);
-				}
-				else
-				{
-					printf("\nERROR. NO HAY DATOS INGRESADOS.\n");
-				}
+			case 3://BAJA
+				removeEmployee(arrayEmployees, QTY_EMPLOYEES, &firstLoad);
 				break;
-			case 4:
-				//INFORME
-				if(firstLoad == TRUE)
-				{
-					sortEmployees(arrayEmployees, QTY_EMPLOYEES);
-				}
-				else
-				{
-					printf("\nERROR. NO HAY DATOS INGRESADOS.\n");
-				}
+			case 4://INFORME
+				sortEmployees(arrayEmployees, QTY_EMPLOYEES, firstLoad);
 				break;
 		}
 	}while(choosenOption!=5);

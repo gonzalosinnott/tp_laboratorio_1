@@ -1,4 +1,4 @@
- /*
+ /**
  ============================================================================
  Name        : utn.c
  Author      : Gonzalo Sinnott Segura
@@ -14,6 +14,7 @@
 #include "mi_biblioteca.h"
 #include "ArrayEmployees.h"
 
+static int checkFirstEmptyIndex(sEmployee* list, int len, int *emptyIndex);
 static int generateNewId(void);
 static int addEmployees(sEmployee* list,int len,int id,char name[],char lastName[],float salary,int sector,int index);
 static int findEmployeeById(sEmployee* list, int len,int* index, int id);
@@ -37,6 +38,11 @@ int getEmployeeMenu(int* choosenOption)
 	{
 		retorno =0;
 	}
+	else
+	{
+		*choosenOption = 5;
+	}
+
 	return retorno;
 }
 
@@ -62,6 +68,49 @@ int initEmployees(sEmployee* list, int len)
 	return retorno;
 }
 
+/**
+ *  \brief loadEmployeeData: Asks the user for the employee data
+ * \param sEmployee* list: Pointer to array of employees
+ * \param int len: Array length
+ * \param int firstLoad: Pointer to space in memory where is the
+ *  variable to indicate if an entry is loaded
+ * \return (-1) Error / (0) Ok
+ */
+
+int loadEmployeeData(sEmployee* list,int len, int *firstLoad)
+{
+	int retorno = -1;
+    int id;
+    char name[LONG_NAME];
+    char lastName[LONG_NAME];
+    float salary;
+    int sector;
+    int emptyIndex;
+
+    checkFirstEmptyIndex(list, len, &emptyIndex);
+
+    if(list != NULL && len > 0 && index >= 0 && emptyIndex < len)
+    {
+
+        if(utn_getString("Ingrese Apellido:", "\nError. ", lastName, 3, LONG_NAME) == 0 &&
+        utn_getString("Ingrese Nombre:", "\nError. ", name, 3, LONG_NAME)== 0 &&
+        utn_getFloat("Ingrese sueldo: ", "\Error. ", &salary, 3) == 0 &&
+        utn_getInt("Ingrese sector de trabajo(1-2-3-4): ", "\nError. ", &sector, 3, 4, 1) == 0)
+        {
+        	id=generateNewId();
+			addEmployees(list,QTY_EMPLOYEES,id,name,lastName,salary,sector,emptyIndex);
+			printf("\nEl ID para %s %s es: %d\n",list[emptyIndex].lastName,list[emptyIndex].name,list[emptyIndex].id);
+			list[emptyIndex].isEmpty=FALSE;
+			*firstLoad = TRUE;
+			retorno=0;
+		}
+    }
+    else
+	{
+		printf("\nNO SE PUEDEN CARGAR MAS REGISTROS.\n");
+	}
+    return retorno;
+}
 
 /**
  *  \brief checkFirstEmptyIndex: Checks first empty index in the array
@@ -72,7 +121,7 @@ int initEmployees(sEmployee* list, int len)
  * \return (-1) Error / (0) Ok
  */
 
-int checkFirstEmptyIndex(sEmployee* list, int len, int *emptyIndex)
+static int checkFirstEmptyIndex(sEmployee* list, int len, int *emptyIndex)
 {
 	int retornar = -1;
 	if(list != NULL && len >0 && emptyIndex != NULL)
@@ -88,41 +137,6 @@ int checkFirstEmptyIndex(sEmployee* list, int len, int *emptyIndex)
 		}
 	}
 	return retornar;
-}
-
-/**
- *  \brief loadEmployeeData: Asks the user for the employee data
- * \param sEmployee* list: Pointer to array of employees
- * \param int len: Array length
- * \param int emptyIndex: Position of first empty index.
- * \return (-1) Error / (0) Ok
- */
-
-int loadEmployeeData(sEmployee* list,int len, int index)
-{
-	int retorno = -1;
-    int id;
-    char name[LONG_NAME];
-    char lastName[LONG_NAME];
-    float salary;
-    int sector;
-
-    if(list != NULL && len > 0 && index >= 0 && index < len)
-    {
-
-        if(utn_getString("Ingrese Apellido:", "\nError. ", lastName, 3, LONG_NAME) == 0 &&
-        utn_getString("Ingrese Nombre:", "\nError. ", name, 3, LONG_NAME)== 0 &&
-        utn_getFloat("Ingrese sueldo: ", "\Error. ", &salary, 3) == 0 &&
-        utn_getInt("Ingrese sector de trabajo(1-2-3-4): ", "\nError. ", &sector, 3, 4, 1) == 0)
-        {
-        	id=generateNewId();
-			addEmployees(list,QTY_EMPLOYEES,id,name,lastName,salary,sector,index);
-			printf("\nEl ID para %s %s es: %d\n",list[index].lastName,list[index].name,list[index].id);
-			list[index].isEmpty=FALSE;
-			retorno=0;
-		}
-    }
-    return retorno;
 }
 
 /**
@@ -201,10 +215,11 @@ static int findEmployeeById(sEmployee* list, int len,int* index, int id)
  * Allows to modify individual fields of the employee by a switch
  * \param sEmployee* list: Pointer to array of employees
  * \param int len: Array length
+ * \param int firstLoad: variable to check if there is even one entry loaded
  * \return (-1) Error / (0) Ok
  */
 
-int modifyEmployee(sEmployee* list, int len)
+int modifyEmployee(sEmployee* list, int len, int firstLoad)
 {
 	int retorno = -1;
 	int idToSearch;
@@ -213,46 +228,55 @@ int modifyEmployee(sEmployee* list, int len)
 	int index;
 	sEmployee bufferEmployee;
 
-	utn_getInt("Ingrese el ID a modificar:","Error, no es un ID valido. ",&idToSearch,3,1000,1);
-
-	if(findEmployeeById(list, QTY_EMPLOYEES, &index, idToSearch)==0)
+	if(firstLoad == FALSE)
 	{
-		if(	list != NULL &&	len>0 && index>=0 && index<len && list[index].isEmpty == FALSE)
+
+		printf("\nERROR. NO HAY DATOS INGRESADOS.\n");
+
+	}
+	else
+	{
+		utn_getInt("Ingrese el ID a modificar:","Error, no es un ID valido. ",&idToSearch,3,1000,1);
+
+		if(findEmployeeById(list, QTY_EMPLOYEES, &index, idToSearch)==0)
 		{
-			do
+			if(	list != NULL &&	len>0 && index>=0 && index<len && list[index].isEmpty == FALSE)
 			{
-				printf("Empleado a modificar\n");
-				printf("Apellido y Nombre: %s %s Sueldo: %.2f Sector: %d.\n", list[index].lastName,list[index].name,list[index].salary,list[index].sector);
-				if(utn_getInt("\nQue campo desea modificar:"
-							"\n 1-Apellido."
-							"\n 2-Nombre."
-							"\n 3-Sector."
-							"\n 4-Salario."
-							"\nOpcion:", "\nError.", &choosenOption, 3, 4, 1)==0)
+				do
 				{
-					switch(choosenOption)
+					printf("Empleado a modificar\n");
+					printf("Apellido y Nombre: %s %s Sueldo: %.2f Sector: %d.\n", list[index].lastName,list[index].name,list[index].salary,list[index].sector);
+					if(utn_getInt("\nQue campo desea modificar:"
+								"\n 1-Apellido."
+								"\n 2-Nombre."
+								"\n 3-Sector."
+								"\n 4-Salario."
+								"\nOpcion:", "\nError.", &choosenOption, 3, 4, 1)==0)
 					{
-						case 1:
-							if(utn_getString("\nApellido:","\nError. ",bufferEmployee.lastName,2,LONG_NAME)==0)
-								strcpy(list[index].lastName,bufferEmployee.lastName);
-							break;
-						case 2:
-							if(utn_getString("\nNombre:","\nError. ",bufferEmployee.name,2,LONG_NAME)==0)
-								strcpy(list[index].name,bufferEmployee.name);
-							break;
-						case 3:
-							if(utn_getInt("Sector de trabajo(1-2-3-4): ", "\nError. ", &bufferEmployee.sector, 3, 4, 1)==0)
-								list[index].sector=bufferEmployee.sector;
-							break;
-						case 4:
-							if(utn_getFloat("Sueldo: ", "\Error. ", &bufferEmployee.salary, 3)==0)
-								list[index].salary=bufferEmployee.salary;
-							break;
+						switch(choosenOption)
+						{
+							case 1:
+								if(utn_getString("\nApellido:","\nError. ",bufferEmployee.lastName,2,LONG_NAME)==0)
+									strcpy(list[index].lastName,bufferEmployee.lastName);
+								break;
+							case 2:
+								if(utn_getString("\nNombre:","\nError. ",bufferEmployee.name,2,LONG_NAME)==0)
+									strcpy(list[index].name,bufferEmployee.name);
+								break;
+							case 3:
+								if(utn_getInt("Sector de trabajo(1-2-3-4): ", "\nError. ", &bufferEmployee.sector, 3, 4, 1)==0)
+									list[index].sector=bufferEmployee.sector;
+								break;
+							case 4:
+								if(utn_getFloat("Sueldo: ", "\Error. ", &bufferEmployee.salary, 3)==0)
+									list[index].salary=bufferEmployee.salary;
+								break;
+						}
 					}
-				}
-				utn_getChar("¿Desea seguir modificando este ID?(Y/N)", "Error. ", &answer, 'Y', 'N', 3);
-			}while(answer!='N');
-			retorno = 0;
+					utn_getChar("¿Desea seguir modificando este ID?(Y/N)", "Error. ", &answer, 'Y', 'N', 3);
+				}while(answer!='N');
+				retorno = 0;
+			}
 		}
 	}
 	return retorno;
@@ -262,11 +286,12 @@ int modifyEmployee(sEmployee* list, int len)
  *  \brief removeEmployee:Remove a Employee by Id (put isEmpty Flag in TRUE)
  * \param sEmployee* list: Pointer to array of employees
  * \param int len: Array length
- * \param int *thereIsData: Safeguard to prevent errors if all data is erased
+ * \param int *firstLoad: variable to check if there is even one entry loaded and
+ *  safeguard to prevent errors if all data is erased
  * \return (-1) Error / (0) Ok
  */
 
-int removeEmployee(sEmployee* list, int len,int *thereIsData)
+int removeEmployee(sEmployee* list, int len,int *firstLoad)
 {
 	int retorno = -1;
 	int idToSearch;
@@ -274,37 +299,45 @@ int removeEmployee(sEmployee* list, int len,int *thereIsData)
 	int index;
 	sEmployee bufferEmployee;
 
-	utn_getInt("Ingrese el ID a eliminar:","Error, no es un ID valido. ",&idToSearch,3,1000,1);
-
-	if(findEmployeeById(list, QTY_EMPLOYEES, &index, idToSearch)==0)
+	if(*firstLoad == FALSE)
 	{
-		if(	list != NULL && len>0 && index>=0 && index<len && list[index].isEmpty == FALSE)
+
+		printf("\nERROR. NO HAY DATOS INGRESADOS.\n");
+
+	}
+	else
+	{
+		utn_getInt("Ingrese el ID a eliminar:","Error, no es un ID valido. ",&idToSearch,3,1000,1);
+		if(findEmployeeById(list, QTY_EMPLOYEES, &index, idToSearch)==0)
 		{
-			printf("Empleado a eliminar\n");
-			printf("Apellido y Nombre: %s %s Sueldo: %.2f Sector: %d.\n", list[index].lastName,list[index].name,list[index].salary,list[index].sector);
-			utn_getChar("¿Desea eliminar este ID?(Y/N)", "Error. ", &answer, 'Y', 'N', 3);
-			if(answer=='Y')
+			if(	list != NULL && len>0 && index>=0 && index<len && list[index].isEmpty == FALSE)
 			{
-				bufferEmployee.id = idToSearch;
-				bufferEmployee.isEmpty = TRUE;
-				list[index] = bufferEmployee;
-				printf("REGISTRO DE EMPLEADO BORRADO CON EXITO.");
-				retorno = 0;
-				for (int i = 0; i < len; i++)
+				printf("Empleado a eliminar\n");
+				printf("Apellido y Nombre: %s %s Sueldo: %.2f Sector: %d.\n", list[index].lastName,list[index].name,list[index].salary,list[index].sector);
+				utn_getChar("¿Desea eliminar este ID?(Y/N)", "Error. ", &answer, 'Y', 'N', 3);
+				if(answer=='Y')
 				{
-					if(list[i].isEmpty == FALSE)
+					bufferEmployee.id = idToSearch;
+					bufferEmployee.isEmpty = TRUE;
+					list[index] = bufferEmployee;
+					printf("REGISTRO DE EMPLEADO BORRADO CON EXITO.");
+					retorno = 0;
+					for (int i = 0; i < len; i++)
 					{
-						*thereIsData = TRUE;
-					}
-					else
-					{
-						*thereIsData = FALSE;
+						if(list[i].isEmpty == FALSE)
+						{
+							*firstLoad = TRUE;
+						}
+						else
+						{
+							*firstLoad = FALSE;
+						}
 					}
 				}
-			}
-			else
-			{
-				printf("ERROR, INGRESE 'Y' PARA BORRAR EL REGISTRO.");
+				else
+				{
+					printf("ERROR, INGRESE 'Y' PARA BORRAR EL REGISTRO.");
+				}
 			}
 		}
 	}
@@ -316,26 +349,35 @@ int removeEmployee(sEmployee* list, int len,int *thereIsData)
  * indicate UP or DOWN order
  * \param Employee* list: Pointer to array of employees
  * \param int len: Array length
- * \param int sortOrder: [2] indicate UP - [1] indicate DOWN
+ * \param int firstLoad: variable to check if there is even one entry loaded
  * \return (-1) Error / (0) Ok
  */
 
-int sortEmployees(sEmployee* list, int len)
+int sortEmployees(sEmployee* list, int len, int firstLoad)
 {
 	int retorno = -1;
 	int sortOrder;
 
-	if(utn_getInt("\n1- Orden Descendente"
-			      "\n2- Orden Ascendente"
-			      "\nOpcion:","Error. ",&sortOrder,3,2,1)==0)
+	if(firstLoad == FALSE)
 	{
-		if(list!= NULL && len > 0)
+
+		printf("\nERROR. NO HAY DATOS INGRESADOS.\n");
+
+	}
+	else
+	{
+		if(utn_getInt("\n1- Orden Descendente"
+					  "\n2- Orden Ascendente"
+					  "\nOpcion:","Error. ",&sortOrder,3,2,1)==0)
 		{
-			sortEmployeeByLastName(list, QTY_EMPLOYEES, sortOrder);
-			sortEmployeeBySector(list, QTY_EMPLOYEES, sortOrder);
-			printEmployees(list, QTY_EMPLOYEES);
-			salaryInfo(list, QTY_EMPLOYEES);
-			retorno = 0;
+			if(list!= NULL && len > 0)
+			{
+				sortEmployeeByLastName(list, QTY_EMPLOYEES, sortOrder);
+				sortEmployeeBySector(list, QTY_EMPLOYEES, sortOrder);
+				printEmployees(list, QTY_EMPLOYEES);
+				salaryInfo(list, QTY_EMPLOYEES);
+				retorno = 0;
+			}
 		}
 	}
 	return retorno;
@@ -461,7 +503,7 @@ static int printEmployees(sEmployee* list, int len)
 }
 
 /**
- * \brief salaryInfo: print salary info print sum of salaries, average salaries
+ * \brief salaryInfo: print sum of salaries, average salaries
  * \and number of employees with salaries above average
  * \param sEmployee* list: Pointer to array of employees
  * \param int len: Array length
@@ -538,7 +580,7 @@ static int employeeAboveAverage(sEmployee* list, int len, float salaryAverage, i
 	{
 		for(int i=0;i< len ;i++)
 		{
-			if(list[i].isEmpty == FALSE &&list[i].salary>salaryAverage)
+			if(list[i].salary>salaryAverage)
 			{
 				counter++;
 			}

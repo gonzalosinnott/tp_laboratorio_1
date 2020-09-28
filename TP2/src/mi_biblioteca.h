@@ -1,4 +1,4 @@
-/*
+/**
  ============================================================================
  Name        : mi_biblioteca.c
  Author      : Gonzalo Sinnott Segura

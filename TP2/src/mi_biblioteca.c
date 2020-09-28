@@ -1,4 +1,4 @@
- /*
+ /**
  ============================================================================
  Name        : utn.c
  Author      : Gonzalo Sinnott Segura
@@ -17,7 +17,6 @@
 
 static int utn_checkString(char* string,int len);
 static int myGets(char *string, int len);
-
 
 /**
  * \brief utn_getInt: Asks the user for an int value
