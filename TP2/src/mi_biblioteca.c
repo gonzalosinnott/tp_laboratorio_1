@@ -10,11 +10,17 @@
 
 #include <stdio_ext.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
+#include <limits.h>
+#include "mi_biblioteca.h"
+#include "ArrayEmployees.h"
 
 #define BUFFER_STRING_LEN 1000
 
+static int checkInt(int* pValue);
+static int isInt(char* string);
+static int checkFloat(float* pValue);
+static int isFloat(char* string);
 static int utn_checkString(char* string,int len);
 static int myGets(char *string, int len);
 
@@ -35,17 +41,17 @@ int utn_getInt(char* msj, char* errorMsj, int* pValue,int retries,int max,int mi
 	int bufferInt;
 	int resultadoScanf;
 
-	if(msj != NULL && errorMsj != NULL && pValue != NULL &&	retries >= 0 && max >= min)
+	if(msj != NULL && errorMsj != NULL && pValue != NULL && retries >= 0)
 	{
 		do
 		{
 			printf("%s",msj);
 			__fpurge(stdin);
-			resultadoScanf = scanf("%d" , &bufferInt);
-			if(resultadoScanf == 1 && bufferInt >= min && bufferInt <= max)
+			resultadoScanf = checkInt(&bufferInt);
+			if(resultadoScanf == 0 && bufferInt >= min && bufferInt <= max)
 			{
-				*pValue = bufferInt;
 				retorno = 0;
+				*pValue = bufferInt;
 				break;
 			}
 			else
@@ -59,6 +65,59 @@ int utn_getInt(char* msj, char* errorMsj, int* pValue,int retries,int max,int mi
 }
 
 /**
+ * getInt: pide un texto al usuario, lo almacena como cadena, valida y convierte el texto a numero y lo devuelve como int
+ * presultado: puntero numero entero
+ * \return (-1) Error / (0) Ok
+ *
+ */
+
+static int checkInt(int* pValue)
+{
+	int retorno = -1;
+	char buffer[64];
+	if(pValue != NULL)
+	{
+
+		if(myGets(buffer,sizeof(buffer))==0 && isInt(buffer) == 0)
+		{
+			*pValue = atoi(buffer);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+/**
+ * esNumerica: Verifica si la cadena ingresada es numerica
+ * cadena: cadena de caracteres a ser analizada
+ * limite: limite de la cadena
+ * \return (-1) Error / (0) Ok*
+ */
+static int isInt(char* string)
+{
+	int retorno = 0;
+	int i = 0;
+
+	if(string != NULL && strlen(string) > 0)
+	{
+		if(string[0] == '-' || string[0] == '+')
+		{
+			i = 1;
+			while(string[i] != '\0')
+			{
+				if(string[i] < '0' || string[i] > '9')
+				{
+					retorno = -1;
+					break;
+				}
+				i++;
+			}
+		}
+	}
+	return retorno;
+}
+
+/**
  * \brief utn_getFloat: Asks the user for a float value
  * \param char* msj: Message for the user
  * \param char* errorMsj: Error message
@@ -67,7 +126,7 @@ int utn_getInt(char* msj, char* errorMsj, int* pValue,int retries,int max,int mi
  * \return (-1) Error / (0) Ok
  */
 
-int utn_getFloat(char* msj, char* errorMsj, float* pValue,int retries)
+int utn_getFloat(char* msj, char* errorMsj, float* pValue,int retries, int max, int min)
 {
 	int retorno = -1;
 	float bufferFloat;
@@ -79,8 +138,8 @@ int utn_getFloat(char* msj, char* errorMsj, float* pValue,int retries)
 		{
 			printf("%s",msj);
 			__fpurge(stdin);
-			resultadoScanf = scanf("%f" , &bufferFloat);
-			if(resultadoScanf == 1 && pValue >0)
+			resultadoScanf = checkFloat(&bufferFloat);
+			if(resultadoScanf == 0 && bufferFloat >= min && bufferFloat <= max)
 			{
 				retorno = 0;
 				*pValue = bufferFloat;
@@ -88,10 +147,62 @@ int utn_getFloat(char* msj, char* errorMsj, float* pValue,int retries)
 			}
 			else
 			{
-				printf("%s Quedan %d reintentos",errorMsj, retries);
+				printf("%s Quedan %d reintentos\n",errorMsj, retries);
 				retries--;
 			}
 		}while(retries >= 0);
+	}
+	return retorno;
+}
+
+/**
+ * getInt: pide un texto al usuario, lo almacena como cadena, valida y convierte el texto a numero y lo devuelve como int
+ * presultado: puntero numero entero
+ * \return (-1) Error / (0) Ok
+ */
+
+static int checkFloat(float* pValue)
+{
+	int retorno = -1;
+	char bufferFloat[64];
+	if(pValue != NULL)
+	{
+
+		if(myGets(bufferFloat,sizeof(bufferFloat))==0 && isFloat(bufferFloat) == 0)
+		{
+			*pValue = atof(bufferFloat);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+/**
+ * esNumerica: Verifica si la cadena ingresada es numerica
+ * cadena: cadena de caracteres a ser analizada
+ * limite: limite de la cadena
+ * \return (-1) Error / (0) Ok*
+ */
+static int isFloat(char* string)
+{
+	int retorno = 0;
+	int i = 0;
+
+	if(string != NULL && strlen(string) > 0)
+	{
+		if(string[0] == '-' || string[0] == '+')
+		{
+			i = 1;
+			while(string[i] != '\0')
+			{
+				if(string[i] < '0' || string[i] > '9')
+				{
+					retorno = -1;
+					break;
+				}
+				i++;
+			}
+		}
 	}
 	return retorno;
 }
@@ -171,7 +282,10 @@ static int myGets(char *string, int len)
 {
 	__fpurge(stdin);
 	fgets (string, len, stdin);
-	string[strlen (string) - 1] = '\0';
+	if(string[strlen(string)-1]=='\n')
+	{
+		string[strlen (string) - 1] = '\0';
+	}
 	return 0;
 }
 

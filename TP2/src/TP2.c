@@ -18,9 +18,10 @@
  B. Total y promedio de los salarios, y cuántos empleados superan el salario promedio.
  ============================================================================
  */
-
 #include <stdio_ext.h>
 #include <stdlib.h>
+#include <string.h>
+#include <limits.h>
 #include "mi_biblioteca.h"
 #include "ArrayEmployees.h"
 
@@ -28,7 +29,7 @@ int main(void){
 
 	int choosenOption;
 	int firstLoad = FALSE;
-	sEmployee arrayEmployees[QTY_EMPLOYEES];
+	Employee arrayEmployees[QTY_EMPLOYEES];
 
 	initEmployees(arrayEmployees, QTY_EMPLOYEES);
 	do
@@ -40,13 +41,13 @@ int main(void){
 				loadEmployeeData(arrayEmployees, QTY_EMPLOYEES, &firstLoad);
 				break;
 			case 2://MODIFICAR
-				modifyEmployee(arrayEmployees, QTY_EMPLOYEES,firstLoad);
+				modifyEntry(arrayEmployees, QTY_EMPLOYEES,firstLoad);
 				break;
 			case 3://BAJA
-				removeEmployee(arrayEmployees, QTY_EMPLOYEES, &firstLoad);
+				removeEntry(arrayEmployees, QTY_EMPLOYEES, &firstLoad);
 				break;
 			case 4://INFORME
-				sortEmployees(arrayEmployees, QTY_EMPLOYEES, firstLoad);
+				getEmployeeReport(arrayEmployees, QTY_EMPLOYEES, firstLoad);
 				break;
 		}
 	}while(choosenOption!=5);

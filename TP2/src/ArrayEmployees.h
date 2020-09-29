@@ -14,7 +14,7 @@
 #define TRUE 1
 #define FALSE 0
 #define LONG_NAME 51
-#define QTY_EMPLOYEES 1000
+#define QTY_EMPLOYEES 3
 
 typedef struct
 {
@@ -24,13 +24,13 @@ typedef struct
 	float salary;
 	int sector;
 	int isEmpty;
-}sEmployee;
+}Employee;
 
 int getEmployeeMenu(int* choosenOption);
-int initEmployees(sEmployee* list, int len);
-int loadEmployeeData(sEmployee* list,int len, int *firstLoad);
-int modifyEmployee(sEmployee* list, int len, int firstLoad);
-int removeEmployee(sEmployee* list, int len,int *firstLoad);
-int sortEmployees(sEmployee* list, int len, int firstLoad);
+int initEmployees(Employee* list, int len);
+int loadEmployeeData(Employee* list,int len, int *firstLoad);
+int modifyEntry(Employee* list, int len, int firstLoad);
+int removeEntry(Employee* list, int len,int *firstLoad);
+int getEmployeeReport(Employee* list, int len, int firstLoad);
 
 #endif /* ARRAYEMPLOYEES_H_ */
