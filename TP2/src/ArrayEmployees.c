@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include <float.h>
 #include "mi_biblioteca.h"
 #include "ArrayEmployees.h"
 
@@ -38,7 +37,7 @@ static int salaryInfo(Employee* list, int len);
 int getEmployeeMenu(int* choosenOption)
 {
 	int retorno = -1;
-	if(utn_getInt("\nIngrese una opcion:"
+	if(utn_getIntNumber("\nIngrese una opcion:"
 					   "\n 1-Alta de empleado."
 					   "\n 2-Modificar datos de empleado."
 					   "\n 3-Baja de empleado."
@@ -154,8 +153,8 @@ static int getEmployeeForm(char *name, char *lastName, float *salary, int *secto
 	{
 		if((utn_getString("Ingrese Apellido:", "Error. ", lastName, 3, LONG_NAME)==0) &&
 		   (utn_getString("Ingrese Nombre:", "Error. ", name, 3, LONG_NAME)==0) &&
-		   (utn_getFloat("Ingrese sueldo: ", "Error. ", salary, 3, INT_MAX , 0)==0) &&
-		   (utn_getInt("Ingrese sector de trabajo(1-2-3-4): ", "\nError. ", sector, 3, 4, 1)== 0))
+		   (utn_getFloatNumber("Ingrese sueldo: ", "Error. ", salary, 3, INT_MAX , 0)==0) &&
+		   (utn_getIntNumber("Ingrese sector de trabajo(1-2-3-4): ", "\nError. ", sector, 3, 4, 1)== 0))
 		{
 			retorno = 0;
 		}
@@ -254,7 +253,7 @@ int modifyEntry(Employee* list, int len, int firstLoad)
 	}
 	else
 	{
-		if(utn_getInt("Ingrese el ID a modificar:","Error, no es un ID valido. ",&idToSearch,3,INT_MAX,1)==0 &&
+		if(utn_getIntNumber("Ingrese el ID a modificar:","Error, no es un ID valido. ",&idToSearch,3,INT_MAX,1)==0 &&
 		   modifyEmployee(list,QTY_EMPLOYEES,idToSearch)== 0)
 		{
 			retorno = 0;
@@ -289,12 +288,12 @@ static int modifyEmployee(Employee* list, int len,int id)
 		{
 			printf("Empleado a modificar\n");
 			printf("Apellido y Nombre: %s %s Sueldo: %.2f Sector: %d.\n", list[indexToModify].lastName,list[indexToModify].name,list[indexToModify].salary,list[indexToModify].sector);
-			if(utn_getInt("\nQue campo desea modificar:"
-						"\n 1-Apellido."
-						"\n 2-Nombre."
-						"\n 3-Sector."
-						"\n 4-Salario."
-						"\nOpcion:", "\nError.", &choosenOption, 3, 4, 1)==0)
+			if(utn_getIntNumber("\nQue campo desea modificar:"
+								"\n 1-Apellido."
+								"\n 2-Nombre."
+								"\n 3-Sector."
+								"\n 4-Salario."
+								"\nOpcion:", "\nError.", &choosenOption, 3, 4, 1)==0)
 		{
 			switch(choosenOption)
 			{
@@ -307,11 +306,11 @@ static int modifyEmployee(Employee* list, int len,int id)
 						strcpy(list[indexToModify].name,bufferEmployee.name);
 					break;
 				case 3:
-					if(utn_getInt("Sector de trabajo(1-2-3-4): ", "\nError. ", &bufferEmployee.sector, 3, 4, 1)==0)
+					if(utn_getIntNumber("Sector de trabajo(1-2-3-4): ", "\nError. ", &bufferEmployee.sector, 3, 4, 1)==0)
 						list[indexToModify].sector=bufferEmployee.sector;
 					break;
 				case 4:
-					if(utn_getFloat("Sueldo: ", "\Error. ", &bufferEmployee.salary, 3, INT_MAX , 0)==0)
+					if(utn_getFloatNumber("Sueldo: ", "\Error. ", &bufferEmployee.salary, 3, INT_MAX , 0)==0)
 						list[indexToModify].salary=bufferEmployee.salary;
 					break;
 			}
@@ -344,7 +343,7 @@ int removeEntry(Employee* list, int len,int *firstLoad)
 	}
 	else
 	{
-		if(utn_getInt("Ingrese el ID a eliminar:","Error, no es un ID valido. ",&idToSearch,3,INT_MAX,1)==0 &&
+		if(utn_getIntNumber("Ingrese el ID a eliminar:","Error, no es un ID valido. ",&idToSearch,3,INT_MAX,1)==0 &&
 		   removeEmployee(list,QTY_EMPLOYEES,idToSearch)== 0)
 		{
 			for(int i = 0; i < len; i++)
@@ -431,9 +430,9 @@ int getEmployeeReport(Employee* list, int len, int firstLoad)
 	}
 	else
 	{
-		if(utn_getInt("\n1- Orden Descendente"
-					  "\n2- Orden Ascendente"
-					  "\nOpcion:","Error. ",&sortOrder,3,2,1)==0)
+		if(utn_getIntNumber("\n1- Orden Descendente"
+						    "\n2- Orden Ascendente"
+						    "\nOpcion:","Error. ",&sortOrder,3,2,1)==0)
 		{
 			if(list!= NULL && len > 0)
 			{
