@@ -14,7 +14,7 @@
 #define TRUE 1
 #define FALSE 0
 #define LONG_NAME 51
-#define QTY_EMPLOYEES 3
+#define QTY_EMPLOYEES 1000
 
 typedef struct
 {

@@ -29,9 +29,10 @@ int main(void){
 
 	int choosenOption;
 	int firstLoad = FALSE;
-	Employee arrayEmployees[QTY_EMPLOYEES];
 
+	Employee arrayEmployees[QTY_EMPLOYEES];
 	initEmployees(arrayEmployees, QTY_EMPLOYEES);
+
 	do
 	{
 		getEmployeeMenu(&choosenOption);
@@ -49,6 +50,7 @@ int main(void){
 			case 4://INFORME
 				getEmployeeReport(arrayEmployees, QTY_EMPLOYEES, firstLoad);
 				break;
+
 		}
 	}while(choosenOption!=5);
 	printf("PROGRAMA TERMINADO");
