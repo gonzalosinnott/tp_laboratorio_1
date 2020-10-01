@@ -15,6 +15,8 @@
 #define FALSE 0
 #define LONG_NAME 51
 #define QTY_EMPLOYEES 1000
+#define SALARY_MIN 0.00
+#define SALARY_MAX INT_MAX
 
 typedef struct
 {

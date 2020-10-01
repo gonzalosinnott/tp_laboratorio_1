@@ -21,7 +21,7 @@ static int getInt(int* pValue);
 static int isInt(char* string);
 static int getFloat(float* pValue);
 static int isFloat(char* string);
-static int utn_checkString(char* string,int len);
+static int checkString(char* string,int len);
 static int myGets(char *string, int len);
 
 /**
@@ -221,7 +221,7 @@ int utn_getString(char* msj, char* errorMsj, char* pValue,int retries, int len)
 			printf("%s",msj);
 			if( myGets(bufferString,BUFFER_STRING_LEN) == 0 &&
 				strnlen(bufferString,sizeof(bufferString)-1)<= len &&
-				utn_checkString(bufferString,len) == 0 )
+				checkString(bufferString,len) == 0 )
 			{
 				strncpy(pValue,bufferString,len);
 				retorno = 0;
@@ -245,7 +245,7 @@ int utn_getString(char* msj, char* errorMsj, char* pValue,int retries, int len)
  * \return (-1) Error / (0) Ok
  */
 
-static int utn_checkString(char* string,int len)
+static int checkString(char* string,int len)
 {
 	int retorno = 0; // TODOOK
 

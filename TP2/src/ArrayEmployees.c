@@ -164,7 +164,7 @@ static int getEmployeeForm(char *name, char *lastName, float *salary, int *secto
 	{
 		if((utn_getString("Ingrese Apellido:", "Error. ", lastName, 3, LONG_NAME)==0) &&
 		   (utn_getString("Ingrese Nombre:", "Error. ", name, 3, LONG_NAME)==0) &&
-		   (utn_getFloatNumber("Ingrese sueldo: ", "Error. ", salary, 3, INT_MAX , 0)==0) &&
+		   (utn_getFloatNumber("Ingrese sueldo: ", "Error. ", salary, 3, SALARY_MAX , SALARY_MIN)==0) &&
 		   (utn_getIntNumber("Ingrese sector de trabajo(1-2-3-4): ", "\nError. ", sector, 3, 4, 1)== 0))
 		{
 			retorno = 0;
