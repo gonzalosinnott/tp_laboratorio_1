@@ -38,10 +38,10 @@ int getEmployeeMenu(int* choosenOption)
 {
 	int retorno = -1;
 	if(utn_getIntNumber("\nIngrese una opcion:"
-					   "\n 1-Alta de empleado."
-					   "\n 2-Modificar datos de empleado."
-					   "\n 3-Baja de empleado."
-					   "\n 4-Informe de personal."
+					   "\n 1-Alta de empleado"
+					   "\n 2-Modificar datos de empleado"
+					   "\n 3-Baja de empleado"
+					   "\n 4-Informe"
 					   "\n 5-Salir"
 					   "\nOpcion:", "\nError.", choosenOption, 3, 5, 1)==0)
 	{
@@ -165,7 +165,12 @@ static int getEmployeeForm(char *name, char *lastName, float *salary, int *secto
 		if((utn_getString("Ingrese Apellido:", "Error. ", lastName, 3, LONG_NAME)==0) &&
 		   (utn_getString("Ingrese Nombre:", "Error. ", name, 3, LONG_NAME)==0) &&
 		   (utn_getFloatNumber("Ingrese sueldo: ", "Error. ", salary, 3, SALARY_MAX , SALARY_MIN)==0) &&
-		   (utn_getIntNumber("Ingrese sector de trabajo(1-2-3-4): ", "\nError. ", sector, 3, 4, 1)== 0))
+		   (utn_getIntNumber("Ingrese sector de trabajo:"
+				             "\n 1- Deposito"
+				             "\n 2- Atencion al cliente"
+				             "\n 3- Caja"
+				             "\n 4- Mantenimiento"
+				             "\nOpcion:", "\nError. ", sector, 3, 4, 1)== 0))
 		{
 			retorno = 0;
 		}
