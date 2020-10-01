@@ -56,7 +56,7 @@ int utn_getIntNumber(char* msj, char* errorMsj, int* pValue,int retries,int max,
 				printf("%s Quedan %d reintentos\n",errorMsj, retries);
 				retries--;
 			}
-		}while(retries > 0);
+		}while(retries >= 0);
 	}
 	return retorno;
 }

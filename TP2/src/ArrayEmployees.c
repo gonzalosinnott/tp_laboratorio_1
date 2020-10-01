@@ -444,6 +444,7 @@ int getEmployeeReport(Employee* list, int len, int firstLoad)
 {
 	int retorno = -1;
 	int sortOrder;
+	int choosenOption;
 
 	if(firstLoad == FALSE)
 	{
@@ -453,18 +454,35 @@ int getEmployeeReport(Employee* list, int len, int firstLoad)
 	}
 	else
 	{
-		if(utn_getIntNumber("\n1- Orden Descendente"
-						    "\n2- Orden Ascendente"
-						    "\nOpcion:","Error. ",&sortOrder,3,2,1)==0)
+		if(utn_getIntNumber("\n1- Informe de Personal"
+						    "\n2- Informe de Salarios"
+						    "\n3- Volver al menu Principal"
+						    "\nOpcion:","Error. ",&choosenOption,3,3,1)==0)
 		{
-			if(list!= NULL && len > 0)
+			switch(choosenOption)
 			{
-				sortEmployees(list, QTY_EMPLOYEES, sortOrder);
-				printEmployees(list, QTY_EMPLOYEES);
-				salaryInfo(list, QTY_EMPLOYEES);
-				retorno = 0;
+				case 1:
+					if(utn_getIntNumber("\n1- Orden Descendente"
+										"\n2- Orden Ascendente"
+										"\nOpcion:",
+										"Error. ",&sortOrder,3,2,1)==0)
+					{
+						if(list!= NULL && len > 0)
+						{
+							sortEmployees(list, QTY_EMPLOYEES, sortOrder);
+						}
+					}
+					break;
+				case 2:
+					if(list!= NULL && len > 0)
+					{
+						salaryInfo(list, QTY_EMPLOYEES);
+					}
+					break;
+
 			}
 		}
+		retorno = 0;
 	}
 	return retorno;
 }
@@ -486,6 +504,7 @@ static int sortEmployees(Employee* list, int len, int order)
 	{
 		sortEmployeeBySector(list, QTY_EMPLOYEES, order);
 		sortEmployeeByLastName(list, QTY_EMPLOYEES, order);
+		printEmployees(list, QTY_EMPLOYEES);
 		retorno = 0;
 	}
 	return retorno;

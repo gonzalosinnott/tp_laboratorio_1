@@ -35,4 +35,5 @@ int modifyEntry(Employee* list, int len, int firstLoad);
 int removeEntry(Employee* list, int len,int *firstLoad);
 int getEmployeeReport(Employee* list, int len, int firstLoad);
 
+
 #endif /* ARRAYEMPLOYEES_H_ */
