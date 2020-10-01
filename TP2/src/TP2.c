@@ -50,7 +50,6 @@ int main(void){
 			case 4://INFORME
 				getEmployeeReport(arrayEmployees, QTY_EMPLOYEES, firstLoad);
 				break;
-
 		}
 	}while(choosenOption!=5);
 	printf("PROGRAMA TERMINADO");

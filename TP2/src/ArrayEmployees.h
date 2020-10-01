@@ -27,13 +27,29 @@ typedef struct
 	int sector;
 	int isEmpty;
 }Employee;
-
-int getEmployeeMenu(int* choosenOption);
+//INICIALIZAR
 int initEmployees(Employee* list, int len);
+//MENU
+int getEmployeeMenu(int* choosenOption);
+//ALTA
+int checkFirstEmptyIndex(Employee* list, int len, int *emptyIndex);
+int addEmployees(Employee* list,int len,int id,char name[],char lastName[],float salary,int sector);
+int getEmployeeForm(char *name, char *lastName, float *salary, int *sector);
 int loadEmployeeData(Employee* list,int len, int *firstLoad);
+//MODIFICAR Y BAJA
+int findEmployeeById(Employee* list, int len,int id);
+//MODIFICAR
 int modifyEntry(Employee* list, int len, int firstLoad);
+int modifyEmployee(Employee* list, int len,int id);
+//BAJA
 int removeEntry(Employee* list, int len,int *firstLoad);
+int removeEmployee(Employee* list, int len,int id);
+//INFORME
 int getEmployeeReport(Employee* list, int len, int firstLoad);
-
+int sortEmployees(Employee* list, int len, int order);
+int sortEmployeeByLastName(Employee* list, int len, int order);
+int sortEmployeeBySector(Employee* list, int len, int order);
+int printEmployees(Employee* list, int len);
+int salaryInfo(Employee* list, int len);
 
 #endif /* ARRAYEMPLOYEES_H_ */

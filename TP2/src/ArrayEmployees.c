@@ -15,18 +15,8 @@
 #include "mi_biblioteca.h"
 #include "ArrayEmployees.h"
 
-static int checkFirstEmptyIndex(Employee* list, int len, int *emptyIndex);
-static int getEmployeeForm(char *name, char *lastName, float *salary, int *sector);
 static int generateNewId(void);
-static int addEmployees(Employee* list,int len,int id,char name[],char lastName[],float salary,int sector);
-static int findEmployeeById(Employee* list, int len,int id);
-static int modifyEmployee(Employee* list, int len,int id);
-static int removeEmployee(Employee* list, int len,int id);
-static int sortEmployees(Employee* list, int len, int order);
-static int sortEmployeeByLastName(Employee* list, int len, int order);
-static int sortEmployeeBySector(Employee* list, int len, int order);
-static int printEmployees(Employee* list, int len);
-static int salaryInfo(Employee* list, int len);
+
 
 /**
  * \brief getEmployeeMenu: Menu for choosing options of the program,
@@ -129,7 +119,7 @@ int loadEmployeeData(Employee* list,int len, int *firstLoad)
  * \return (-1) Error / (0) Ok
  */
 
-static int checkFirstEmptyIndex(Employee* list, int len, int *emptyIndex)
+int checkFirstEmptyIndex(Employee* list, int len, int *emptyIndex)
 {
 	int retorno = -1;
 	if(list != NULL && len >0 && emptyIndex != NULL)
@@ -156,7 +146,7 @@ static int checkFirstEmptyIndex(Employee* list, int len, int *emptyIndex)
  * \return (-1) Error / (0) Ok
  */
 
-static int getEmployeeForm(char *name, char *lastName, float *salary, int *sector)
+int getEmployeeForm(char *name, char *lastName, float *salary, int *sector)
 {
 	int retorno = -1;
 
@@ -202,7 +192,7 @@ static int generateNewId(void)
  * \param int sector: Input by user from getEmployeeForm
  * \return (-1) Error / (0) Ok
  */
-static int addEmployees(Employee* list,int len,int id,char name[],char lastName[],float salary,int sector)
+int addEmployees(Employee* list,int len,int id,char name[],char lastName[],float salary,int sector)
 {
 	int retorno = -1;
 	int emptyIndex;
@@ -230,7 +220,7 @@ static int addEmployees(Employee* list,int len,int id,char name[],char lastName[
  * \return Return employee index position or (-1) if ERROR
  */
 
-static int findEmployeeById(Employee* list, int len,int id)
+int findEmployeeById(Employee* list, int len,int id)
 {
 	int retorno;
 
@@ -291,7 +281,7 @@ int modifyEntry(Employee* list, int len, int firstLoad)
  * \return (-1) Error / (0) Ok
  */
 
-static int modifyEmployee(Employee* list, int len,int id)
+int modifyEmployee(Employee* list, int len,int id)
 {
 	int retorno = -1;
 	int choosenOption;
@@ -401,7 +391,7 @@ int removeEntry(Employee* list, int len,int *firstLoad)
  * \return (-1) Error / (0) Ok
  */
 
-static int removeEmployee(Employee* list, int len,int id)
+int removeEmployee(Employee* list, int len,int id)
 {
 	int retorno = -1;
 	int indexToModify;
@@ -501,7 +491,7 @@ int getEmployeeReport(Employee* list, int len, int firstLoad)
  * \return (-1) Error / (0) Ok
  */
 
-static int sortEmployees(Employee* list, int len, int order)
+int sortEmployees(Employee* list, int len, int order)
 {
 	int retorno = 0;
 
@@ -523,7 +513,7 @@ static int sortEmployees(Employee* list, int len, int order)
  * \return (-1) Error / (0) Ok
  */
 
-static int sortEmployeeByLastName(Employee* list, int len, int order)
+int sortEmployeeByLastName(Employee* list, int len, int order)
 {
 	int retorno = -1;
 	int sorted;
@@ -561,7 +551,7 @@ static int sortEmployeeByLastName(Employee* list, int len, int order)
  * \return (-1) Error / (0) Ok
  */
 
-static int sortEmployeeBySector(Employee* list, int len, int order)
+int sortEmployeeBySector(Employee* list, int len, int order)
 {
 	int retorno = -1;
 	int sorted;
@@ -594,7 +584,7 @@ static int sortEmployeeBySector(Employee* list, int len, int order)
  * \return (-1) Error / (0) Ok*
  */
 
-static int printEmployees(Employee* list, int len)
+int printEmployees(Employee* list, int len)
 {
 	int retorno = -1;
 	if(list != NULL && len > 0)
@@ -620,7 +610,7 @@ static int printEmployees(Employee* list, int len)
  * \return (-1) Error / (0) Ok*
  */
 
-static int salaryInfo(Employee* list, int len)
+int salaryInfo(Employee* list, int len)
 {
 	int retorno = -1;
 	int counter = 0;
