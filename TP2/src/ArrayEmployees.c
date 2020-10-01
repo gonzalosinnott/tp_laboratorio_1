@@ -575,12 +575,12 @@ static int printEmployees(Employee* list, int len)
 	int retorno = -1;
 	if(list != NULL && len > 0)
 	{
-		printf("\nApellido        Nombre          Sector  ID     Sueldo\n");
+		printf("\nApellido        |Nombre          |Sector  |ID     |Sueldo\n");
 		for(int i=0;i< len ;i++)
 		{
 			if(list[i].isEmpty == FALSE)
 			{
-				printf("%-15s %-15s %-6d  %-6d $%.2f\n",list[i].lastName,list[i].name,list[i].sector, list[i].id, list[i].salary);
+				printf("%-15s |%-15s |%-6d  |%-6d |$%.2f\n",list[i].lastName,list[i].name,list[i].sector, list[i].id, list[i].salary);
 			}
 		}
 		retorno = 0;
