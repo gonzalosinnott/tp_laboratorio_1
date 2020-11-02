@@ -66,8 +66,6 @@ int initEmployees(Employee* list, int len)
 	return retorno;
 }
 
-
-
 /**
  *  \brief loadEmployeeData: Asks the user for the employee data
  * \param Employee* list: Pointer to array of employees
@@ -192,6 +190,7 @@ static int generateNewId(void)
  * \param int sector: Input by user from getEmployeeForm
  * \return (-1) Error / (0) Ok
  */
+ 
 int addEmployees(Employee* list,int len,int id,char name[],char lastName[],float salary,int sector)
 {
 	int retorno = -1;
@@ -337,7 +336,6 @@ int modifyEmployee(Employee* list, int len,int id)
 		}while(answer!='N');
 		retorno = 0;
 	}
-
 	return retorno;
 }
 
