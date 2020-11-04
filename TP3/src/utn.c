@@ -13,15 +13,25 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include "utn.h"
+
 
 #define BUFFER_STRING_LEN 1000
+#define MAINMENU_HEADER "|                               REGISTRO DE EMPLEADOS                          |\n"
+#define MAINMENU_MSJ "\nIngrese una opción:\n 1. Cargar los datos de los empleados desde el archivo(modo texto).\n 2. Cargar los datos de los empleados desde el archivo (modo binario).\n 3. Alta de empleado.\n 4. Modificar datos de empleado.\n 5. Baja de empleado.\n 6. Listar empleados.\n 7. Ordenar empleados.\n 8. Guardar los datos de los empleados en el archivo (modo texto).\n 9. Guardar los datos de los empleados en el archivo (modo binario).\n 10. Salir.\nOpcion:"
+#define ERROR_MSJ "ERROR, INGRESE UNA OPCION VALIDA"
 
 
 static int myGets(char *string, int len);
 static int getInt(int *pValue);
 static int isInt(char* string);
+static int getFloat(float* pValue);
+static int isFloat(char* string);
 static int checkString(char* string,int len);
 static int checkAlphaNum(char* string, int len);
+
+
+
 
 /**
  * \brief myGets: Reads from stdin until a '\n' (finalization character)
@@ -137,7 +147,92 @@ static int isInt(char* string)
 	}
 	return retorno;
 }
+/**
+ * \brief utn_getFloat: Asks the user for a float value
+ * \param char* msj: Message for the user
+ * \param char* errorMsj: Error message
+ * \param int* pValue: Pointer to store value given by user
+ * \param int retries: amount of retries permitted
+ * \return (-1) Error / (0) Ok
+ */
 
+int utn_getFloatNumber(char* msj, char* errorMsj, float* pValue,int retries, int max, int min)
+{
+	int retorno = -1;
+	float bufferFloat;
+
+		if(msj != NULL && errorMsj != NULL && pValue != NULL && retries >= 0 && min <= max)
+		{
+			do
+			{
+				printf("%s",msj);
+				if(getFloat(&bufferFloat) == 0 && bufferFloat >= min && bufferFloat <= max)
+				{
+					*pValue = bufferFloat;
+					retorno = 0;
+					break;
+				}
+				else
+				{
+					printf("%s Quedan %d reintentos\n",errorMsj, retries);
+					retries--;
+				}
+			}while(retries > 0);
+		}
+		return retorno;
+}
+
+/**
+ * \brief getFloat: Asks the user for a float number, converts it to string,
+ *  then validates said value and returns it as an float.
+ * \param int* pValue: pointer to Value given by user.
+ * \return (-1) Error / (0) Ok
+ */
+
+static int getFloat(float* pValue)
+{
+	int retorno = -1;
+	char buffer[64];
+	if(pValue != NULL)
+	{
+		if(myGets(buffer,sizeof(buffer))==0 && isFloat(buffer))
+		{
+			*pValue = atof(buffer);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+/**
+ * \brief isFloat:Checks if the string entered by the user is a number
+ * \param char *string: string of characters to analize
+ * \return (0) Error / (1) Ok
+ */
+
+static int isFloat(char* string)
+{
+	int retorno = 1;
+	int i = 0;
+
+	if(string[0] == '-')
+	{
+		i = 1;
+	}
+	if(string != NULL && strlen(string) > 0)
+	{
+		while(string[i] != '\0')
+		{
+			if((string[i] < '0' || string[i] > '9') && string[i] != '.')
+			{
+				retorno = 0;
+				break;
+			}
+			i++;
+		}
+	}
+	return retorno;
+}
 /**
  * \brief utn_getString Asks the user for an string value
  * \param char* msj: Message for the user
@@ -324,17 +419,25 @@ int utn_getCuit(char* msj, char* errorMsj, char* pValue,int retries, int len)
 	return retorno;
 }
 
-
-///////POSIBLES FUNCIONES SEGUNDA PARTE DEL EXAMEN/////////
-int utn_getPercentage(int number, int total, float *percentage)
+int utn_getMainMenu(int* choosenOption)
 {
 	int retorno = -1;
-
-	if(percentage != NULL)
+	if(choosenOption !=NULL)
 	{
-		*percentage = (float)number *100 / total;
-		retorno = 0;
+		printf("\n--------------------------------------------------------------------------------\n");
+		printf(MAINMENU_HEADER);
+		printf("--------------------------------------------------------------------------------\n");
+		if(utn_getIntNumber(MAINMENU_MSJ,ERROR_MSJ, choosenOption, 3, 20, 1)==0)
+		{
+			retorno =0;
+		}
+		else
+		{
+			*choosenOption = 9;
+		}
 	}
 	return retorno;
 }
+
+
 
