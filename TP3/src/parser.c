@@ -1,7 +1,9 @@
-#include <stdio.h>
+#include <stdio_ext.h>
 #include <stdlib.h>
 #include "LinkedList.h"
 #include "Employee.h"
+
+#define BUFFER_LEN 500
 
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
  *
@@ -34,7 +36,7 @@ int parser_EmployeeToText(FILE* pFile , LinkedList* pArrayListEmployee)
 				employee_getSueldo(pEmployee, &bufferSueldo) == 0 &&
 				employee_getHorasTrabajadas(pEmployee, &bufferHorasTrabajadas) == 0)
 			{
-				fprintf(pFile, "%d,%s,%d,%f\n", bufferId, bufferNombre, bufferHorasTrabajadas, bufferSueldo);
+				fprintf(pFile, "%d,%s,%d,%.2f\n", bufferId, bufferNombre, bufferHorasTrabajadas, bufferSueldo);
 			}
 		}
 		output = 0;
@@ -44,13 +46,13 @@ int parser_EmployeeToText(FILE* pFile , LinkedList* pArrayListEmployee)
 
 int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-	int result = -1;
+	int output = -1;
 	Employee* pEmployee;
-	char bufferHeader[500];
-	char bufferId[500];
-	char bufferName[500];
-	char bufferWorkedHours[500];
-	char bufferSalary[500];
+	char bufferHeader[BUFFER_LEN];
+	char bufferId[BUFFER_LEN];
+	char bufferName[BUFFER_LEN];
+	char bufferWorkedHours[BUFFER_LEN];
+	char bufferSalary[BUFFER_LEN];
 
 	if (pFile != NULL && pArrayListEmployee != NULL)
 	{
@@ -62,17 +64,17 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 				pEmployee = employee_newParametros(bufferId, bufferName, bufferWorkedHours, bufferSalary);
 				if (pEmployee != NULL)
 				{
-					result = ll_add(pArrayListEmployee, pEmployee);
+					output = ll_add(pArrayListEmployee, pEmployee);
 				}
 				else
 				{
-					employee_delete(pEmployee);
+					output = -1;
 					break;
 				}
 			}
 		}while (!feof(pFile));
 	}
-	return result;
+	return output;
 }
 
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).

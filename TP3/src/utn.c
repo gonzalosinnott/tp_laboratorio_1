@@ -15,11 +15,7 @@
 #include <limits.h>
 #include "utn.h"
 
-
-#define BUFFER_STRING_LEN 1000
-#define MAINMENU_HEADER "|                               REGISTRO DE EMPLEADOS                          |\n"
-#define MAINMENU_MSJ "\nIngrese una opción:\n 1. Cargar los datos de los empleados desde el archivo(modo texto).\n 2. Cargar los datos de los empleados desde el archivo (modo binario).\n 3. Alta de empleado.\n 4. Modificar datos de empleado.\n 5. Baja de empleado.\n 6. Listar empleados.\n 7. Ordenar empleados.\n 8. Guardar los datos de los empleados en el archivo (modo texto).\n 9. Guardar los datos de los empleados en el archivo (modo binario).\n 10. Salir.\nOpcion:"
-#define ERROR_MSJ "ERROR, INGRESE UNA OPCION VALIDA"
+#define BUFFER_STRING_LEN 500
 
 
 static int myGets(char *string, int len);
@@ -419,25 +415,6 @@ int utn_getCuit(char* msj, char* errorMsj, char* pValue,int retries, int len)
 	return retorno;
 }
 
-int utn_getMainMenu(int* choosenOption)
-{
-	int retorno = -1;
-	if(choosenOption !=NULL)
-	{
-		printf("\n--------------------------------------------------------------------------------\n");
-		printf(MAINMENU_HEADER);
-		printf("--------------------------------------------------------------------------------\n");
-		if(utn_getIntNumber(MAINMENU_MSJ,ERROR_MSJ, choosenOption, 3, 20, 1)==0)
-		{
-			retorno =0;
-		}
-		else
-		{
-			*choosenOption = 9;
-		}
-	}
-	return retorno;
-}
 
 
 

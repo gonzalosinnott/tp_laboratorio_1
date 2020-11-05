@@ -8,5 +8,6 @@ int controller_printSingleEmployee(LinkedList* pArrayListEmployee, int index);
 int controller_sortEmployee(LinkedList* pArrayListEmployee);
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee);
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee);
+int controller_findIndexById(LinkedList* pArrayListEmployee, int id);
 
 

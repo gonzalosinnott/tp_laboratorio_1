@@ -32,49 +32,104 @@
 #include "Controller.h"
 #include "Employee.h"
 #include "utn.h"
+#include "menu.h"
+
 
 
 #define PATHTXT "data.csv"
 #define PATHBIN "data.bin"
-#define PATHNEWTXT "dataNew.csv"
-#define PATHNEWBIN "dataNew.bin"
+#define PATHBACKUPTXT "databackup.csv"
+#define PATHBACKUPBIN "databackup.bin"
 #define LOADSUCCESS "\nREGISTRO DE EMPLEADOS CARGADO CON EXITO\n"
+#define FILEFORMATERROR "\nERROR, EN EL FORMATO DE LOS DATOS DEL ARCHIVO\n"
+#define OVERLOADERROR "\nERROR, YA EXISTE UN ARCHIVO CARGADO\n"
 #define LOADERROR "\nERROR, CARGUE UN ARCHIVO PRIMERO\n"
 #define SAVESUCCESS "\nREGISTRO DE EMPLEADOS GUARDADO CON EXITO\n"
+#define ADDSUCCESS "\nEMPLEADO CARGADO CON EXITO\n"
 #define TRUE 0
 #define FALSE 1
 
 int main()
 {
     int choosenOption;
+    int fileLoaded = FALSE;
     int savedFile = FALSE;
 
-    LinkedList* listaEmpleados = ll_newLinkedList();
+    LinkedList* employeesList = ll_newLinkedList();
 
     do
     {
-    	utn_getMainMenu(&choosenOption);
+    	menu_getMainMenu(&choosenOption);
         switch(choosenOption)
         {
             case 1: //Cargar los datos de los empleados desde el archivo (modo texto).
-            	if(controller_loadFromText(PATHTXT, listaEmpleados) == 0)
+            	if(fileLoaded == FALSE)
 				{
-					printf(LOADSUCCESS);
-				}
+            		if(controller_loadFromText(PATHTXT, employeesList) == 0)
+            		{
+            			controller_saveAsText(PATHBACKUPTXT, employeesList);
+						printf(LOADSUCCESS);
+						fileLoaded = TRUE;
+            		}
+            		else
+					{
+						printf(FILEFORMATERROR);
+						choosenOption = 10;
+					}
+        		}
+            	else
+            	{
+            		printf(OVERLOADERROR);
+            	}
             	break;
             case 2://Cargar los datos de los empleados desde el archivo (modo binario).
-				if(controller_loadFromBinary(PATHBIN, listaEmpleados) == 0)
+            	if(fileLoaded == FALSE)
+            	{
+					if(controller_loadFromBinary(PATHBIN, employeesList) == 0)
+					{
+						controller_saveAsBinary(PATHBACKUPBIN, employeesList);
+						printf(LOADSUCCESS);
+						fileLoaded = TRUE;
+					}
+					else
+					{
+						printf(FILEFORMATERROR);
+						choosenOption = 10;
+					}
+            	}
+				else
 				{
-					printf(LOADSUCCESS);
+					printf(OVERLOADERROR);
+				}
+				break;
+            case 3: //Alta de empleado
+				if(ll_isEmpty(employeesList)==0)
+				{
+					controller_addEmployee(employeesList);
+					printf(ADDSUCCESS);
+				}
+				else
+				{
+					printf(LOADERROR);
+				}
+				break;
+            case 4: //Modificar datos de empleado
+				if(ll_isEmpty(employeesList)==0)
+				{
+					controller_editEmployee(employeesList);
+				}
+				else
+				{
+					printf(LOADERROR);
 				}
 				break;
 
 
 
             case 6: //Listar empleados
-				if(ll_isEmpty(listaEmpleados)==0)
+				if(ll_isEmpty(employeesList)==0)
 				{
-					controller_ListEmployee(listaEmpleados);
+					controller_ListEmployee(employeesList);
 				}
 				else
 				{
@@ -83,8 +138,8 @@ int main()
 				break;
 
             case 8://Guardar los datos de los empleados en el archivo (modo texto).
-				if(ll_isEmpty(listaEmpleados)==0 &&
-				   controller_saveAsText(PATHNEWTXT, listaEmpleados)==0)
+				if(ll_isEmpty(employeesList)==0 &&
+				   controller_saveAsText(PATHTXT, employeesList)==0)
 				{
 					printf(SAVESUCCESS);
 					savedFile = TRUE;
@@ -95,8 +150,8 @@ int main()
 				}
 				break;
             case 9://Guardar los datos de los empleados en el archivo (modo binario).
-				if(ll_isEmpty(listaEmpleados)==0 &&
-				   controller_saveAsBinary(PATHNEWBIN, listaEmpleados)==0)
+				if(ll_isEmpty(employeesList)==0 &&
+				   controller_saveAsBinary(PATHBIN, employeesList)==0)
 				{
 					printf(SAVESUCCESS);
 					savedFile = TRUE;
@@ -108,5 +163,8 @@ int main()
 				break;
         }
     }while(choosenOption != 10);
+    ll_clear(employeesList);
+	ll_deleteLinkedList(employeesList);
+	printf("\nPROGRAMA TERMINADO\n");
     return 0;
 }
