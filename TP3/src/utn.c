@@ -8,7 +8,6 @@
  ============================================================================
  */
 
-
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,7 +16,6 @@
 
 #define BUFFER_STRING_LEN 500
 
-
 static int myGets(char *string, int len);
 static int getInt(int *pValue);
 static int isInt(char* string);
@@ -25,9 +23,6 @@ static int getFloat(float* pValue);
 static int isFloat(char* string);
 static int checkString(char* string,int len);
 static int checkAlphaNum(char* string, int len);
-
-
-
 
 /**
  * \brief myGets: Reads from stdin until a '\n' (finalization character)
@@ -39,7 +34,7 @@ static int checkAlphaNum(char* string, int len);
 
 static int myGets(char *string, int len)
 {
-	int retorno = -1;
+	int output = -1;
 	__fpurge(stdin);
 	if(string != NULL && len > 0 && fgets (string, len, stdin) == string)
 	{
@@ -47,9 +42,9 @@ static int myGets(char *string, int len)
 		{
 			string[strlen (string) - 1] = '\0';
 		}
-		retorno = 0;
+		output = 0;
 	}
-	return retorno;
+	return output;
 }
 
 /**
@@ -65,7 +60,7 @@ static int myGets(char *string, int len)
 
 int utn_getIntNumber(char* msj, char* errorMsj, int* pValue,int retries,int max,int min)
 {
-	int retorno = -1;
+	int output = -1;
 	int bufferInt;
 
 	if(msj != NULL && errorMsj != NULL && pValue != NULL && retries >= 0 && min <= max)
@@ -76,7 +71,7 @@ int utn_getIntNumber(char* msj, char* errorMsj, int* pValue,int retries,int max,
 			if(getInt(&bufferInt) == 0 && bufferInt >= min && bufferInt <= max)
 			{
 				*pValue = bufferInt;
-				retorno = 0;
+				output = 0;
 				break;
 			}
 			else
@@ -86,7 +81,7 @@ int utn_getIntNumber(char* msj, char* errorMsj, int* pValue,int retries,int max,
 			}
 		}while(retries >= 0);
 	}
-	return retorno;
+	return output;
 }
 
 /**
@@ -98,17 +93,17 @@ int utn_getIntNumber(char* msj, char* errorMsj, int* pValue,int retries,int max,
 
 static int getInt(int *pValue)
 {
-	int retorno = -1;
+	int output = -1;
 	char buffer[64];
 	if(pValue != NULL)
 	{
 		if(myGets(buffer,sizeof(buffer))==0 && isInt(buffer))
 		{
 			*pValue = atoi(buffer);
-			retorno = 0;
+			output = 0;
 		}
 	}
-	return retorno;
+	return output;
 }
 
 /**
@@ -119,7 +114,7 @@ static int getInt(int *pValue)
 
 static int isInt(char* string)
 {
-	int retorno = 1;
+	int output = 1;
 	int i = 0;
 
 	if(string != NULL)
@@ -134,14 +129,14 @@ static int isInt(char* string)
 			{
 				if(string[i] < '0' || string[i] > '9' )
 				{
-					retorno = 0;
+					output = 0;
 					break;
 				}
 				i++;
 			}
 		}
 	}
-	return retorno;
+	return output;
 }
 /**
  * \brief utn_getFloat: Asks the user for a float value
@@ -154,7 +149,7 @@ static int isInt(char* string)
 
 int utn_getFloatNumber(char* msj, char* errorMsj, float* pValue,int retries, int max, int min)
 {
-	int retorno = -1;
+	int output = -1;
 	float bufferFloat;
 
 		if(msj != NULL && errorMsj != NULL && pValue != NULL && retries >= 0 && min <= max)
@@ -165,7 +160,7 @@ int utn_getFloatNumber(char* msj, char* errorMsj, float* pValue,int retries, int
 				if(getFloat(&bufferFloat) == 0 && bufferFloat >= min && bufferFloat <= max)
 				{
 					*pValue = bufferFloat;
-					retorno = 0;
+					output = 0;
 					break;
 				}
 				else
@@ -175,7 +170,7 @@ int utn_getFloatNumber(char* msj, char* errorMsj, float* pValue,int retries, int
 				}
 			}while(retries > 0);
 		}
-		return retorno;
+		return output;
 }
 
 /**
@@ -187,17 +182,17 @@ int utn_getFloatNumber(char* msj, char* errorMsj, float* pValue,int retries, int
 
 static int getFloat(float* pValue)
 {
-	int retorno = -1;
+	int output = -1;
 	char buffer[64];
 	if(pValue != NULL)
 	{
 		if(myGets(buffer,sizeof(buffer))==0 && isFloat(buffer))
 		{
 			*pValue = atof(buffer);
-			retorno = 0;
+			output = 0;
 		}
 	}
-	return retorno;
+	return output;
 }
 
 /**
@@ -208,7 +203,7 @@ static int getFloat(float* pValue)
 
 static int isFloat(char* string)
 {
-	int retorno = 1;
+	int output = 1;
 	int i = 0;
 
 	if(string[0] == '-')
@@ -221,13 +216,13 @@ static int isFloat(char* string)
 		{
 			if((string[i] < '0' || string[i] > '9') && string[i] != '.')
 			{
-				retorno = 0;
+				output = 0;
 				break;
 			}
 			i++;
 		}
 	}
-	return retorno;
+	return output;
 }
 /**
  * \brief utn_getString Asks the user for an string value
@@ -242,7 +237,7 @@ static int isFloat(char* string)
 int utn_getString(char* msj, char* errorMsj, char* pValue,int retries, int len)
 {
 	char bufferString[BUFFER_STRING_LEN];
-	int retorno = -1;
+	int output = -1;
 
 	if(msj != NULL && errorMsj != NULL && pValue != NULL && retries >= 0 && len > 0)
 	{
@@ -254,7 +249,7 @@ int utn_getString(char* msj, char* errorMsj, char* pValue,int retries, int len)
 			   checkString(bufferString,len) == 0 )
 			{
 				strncpy(pValue,bufferString,len);
-				retorno = 0;
+				output = 0;
 				break;
 			}
 			else
@@ -264,7 +259,7 @@ int utn_getString(char* msj, char* errorMsj, char* pValue,int retries, int len)
 			}
 		}while(retries >= 0);
 	}
-	return retorno;
+	return output;
 }
 
 /**
@@ -277,7 +272,7 @@ int utn_getString(char* msj, char* errorMsj, char* pValue,int retries, int len)
 
 static int checkString(char* string,int len)
 {
-	int retorno = 0;
+	int output = 0;
 
 	if( string != NULL && len > 0)
 	{
@@ -287,12 +282,12 @@ static int checkString(char* string,int len)
 				(string[i] < 'a' || string[i] > 'z') &&
 				 string[i] != ' ')
 			{
-				retorno = -1;
+				output = -1;
 				break;
 			}
 		}
 	}
-	return retorno;
+	return output;
 }
 
 /**
@@ -308,7 +303,7 @@ static int checkString(char* string,int len)
 int utn_getAlphaNum(char* msj, char* errorMsj, char* pValue,int retries, int len)
 {
 	char bufferString[BUFFER_STRING_LEN];
-	int retorno = -1;
+	int output = -1;
 
 	if(msj != NULL && errorMsj != NULL && pValue != NULL && retries >= 0 && len > 0)
 	{
@@ -320,7 +315,7 @@ int utn_getAlphaNum(char* msj, char* errorMsj, char* pValue,int retries, int len
 			   checkAlphaNum(bufferString,len) == 0 )
 			{
 				strncpy(pValue,bufferString,len);
-				retorno = 0;
+				output = 0;
 				break;
 			}
 			else
@@ -330,7 +325,7 @@ int utn_getAlphaNum(char* msj, char* errorMsj, char* pValue,int retries, int len
 			}
 		}while(retries >= 0);
 	}
-	return retorno;
+	return output;
 }
 
 /**
@@ -343,7 +338,7 @@ int utn_getAlphaNum(char* msj, char* errorMsj, char* pValue,int retries, int len
 
 static int checkAlphaNum(char* string, int len)
 {
-	int retorno = 0;
+	int output = 0;
 
 	if(string != NULL && len > 0)
 	{
@@ -357,12 +352,12 @@ static int checkAlphaNum(char* string, int len)
 			   (string[i] < 'A' || string[i] > 'Z') &&
 			   (string[i] < '0' || string[i] > '9'))
 			{
-				retorno = -1;
+				output = -1;
 				break;
 			}
 		}
 	}
-	return retorno;
+	return output;
 }
 
 /**
@@ -380,7 +375,7 @@ static int checkAlphaNum(char* string, int len)
 
 int utn_getCuit(char* msj, char* errorMsj, char* pValue,int retries, int len)
 {
-	int retorno = -1;
+	int output = -1;
 	char formatedCUIT[LEN_FORMATEDCUIT];
 	char bufferString[len];
 
@@ -404,7 +399,7 @@ int utn_getCuit(char* msj, char* errorMsj, char* pValue,int retries, int len)
 				{
 					sprintf(formatedCUIT,"%.2s-%.8s-%s", bufferString,bufferString+2,bufferString+10);
 					strncpy(pValue,formatedCUIT,LEN_FORMATEDCUIT);
-					retorno = 0;
+					output = 0;
 					break;
 				}
 			}
@@ -412,7 +407,7 @@ int utn_getCuit(char* msj, char* errorMsj, char* pValue,int retries, int len)
 		}while(retries >= 0);
 
 	}
-	return retorno;
+	return output;
 }
 
 

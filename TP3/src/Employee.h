@@ -1,6 +1,13 @@
+/*
+============================================================================
+Name        : Employee.h
+Author      : Gonzalo Sinnott Segura
+Version     :
+Copyright   :
+Description : Header for Library Employee.c
+============================================================================
+*/
 #include "LinkedList.h"
-
-
 #ifndef employee_H_INCLUDED
 #define employee_H_INCLUDED
 #define NOMBRE_LEN 500
@@ -34,5 +41,10 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas);
 int employee_setSueldoFromTxtFile(Employee* this,char* sueldo);
 int employee_setSueldo(Employee* this, float sueldo);
 int employee_getSueldo(Employee* this,float* sueldo);
+
+int employee_compareId (void* fieldOne, void* fieldTwo);
+int employee_compareNombre(void* fieldOne, void* fieldTwo);
+int employee_compareHorasTrabajadas (void* fieldOne, void* fieldTwo);
+int employee_compareSueldo(void* fieldOne, void* fieldTwo);
 
 #endif // employee_H_INCLUDED

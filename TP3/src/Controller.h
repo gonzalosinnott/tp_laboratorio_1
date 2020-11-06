@@ -1,3 +1,16 @@
+/*
+============================================================================
+Name        : Controller.h
+Author      : Gonzalo Sinnott Segura
+Version     :
+Copyright   :
+Description : Header for Library Controller.c
+============================================================================
+*/
+
+#ifndef CONTROLLER_H_
+#define CONTROLLER_H_
+
 int controller_loadFromText(char* path , LinkedList* pArrayListEmployee);
 int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee);
 int controller_addEmployee(LinkedList* pArrayListEmployee);
@@ -10,4 +23,4 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee);
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee);
 int controller_findIndexById(LinkedList* pArrayListEmployee, int id);
 
-
+#endif /* CONTROLLER_H_ */

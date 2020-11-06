@@ -1,3 +1,13 @@
+/*
+============================================================================
+Name        : Controller.C
+Author      : Gonzalo Sinnott Segura
+Version     :
+Copyright   :
+Description : Library Controller.c
+============================================================================
+*/
+
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -7,23 +17,22 @@
 #include "utn.h"
 #include "menu.h"
 
-
+#define PATHTXT "data.csv"
+#define PATHBIN "data.bin"
 #define MODIFYERROR_MSJ "ERROR, EL CAMPO NO PUDO SER MODIFICADO"
 
 
-/** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief controller_saveAsText:Guarda los datos de los empleados en el archivo data.csv (modo texto).
+ * \param path char*: ruta del archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
 
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 {
 	int output = -1;
 	FILE *pArch;
-
 	if (path != NULL && pArrayListEmployee != NULL)
 	{
 		pArch = fopen(path, "w");
@@ -41,12 +50,11 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 	return output;
 }
 
-/** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief controller_loadFromText: Carga los datos de los empleados desde el archivo data.csv (modo texto).
+ * \param path char*: ruta del archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
 
 int controller_loadFromText(char* path, LinkedList* pArrayListEmployee)
@@ -65,24 +73,20 @@ int controller_loadFromText(char* path, LinkedList* pArrayListEmployee)
 		}
 		else
 		{
-			printf("ERROR, NO SE PUDO CARGAR EL ARCHIVO");
+			printf("ERROR, EL ARCHIVO NO EXISTE");
 		}
-	}
-	else
-	{
-		printf("ERROR, EL ARCHIVO NO EXISTE");
 	}
 	fclose(pArch);
 	return output;
 }
 
-/** \brief Guarda los datos de los empleados en el archivo data.csv (modo binario).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief controller_saveAsBinary: Guarda los datos de los empleados en el archivo data.csv (modo binario).
+ * \param path char*: ruta del archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
+
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
 	int output = -1;
@@ -104,20 +108,17 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	return output;
 }
 
-/** \brief Carga los datos de los empleados desde el archivo data.csv (modo binario).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief controller_loadFromBinary: Carga los datos de los empleados desde el archivo data.csv (modo binario).
+ * \param path char*: ruta del archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
+
 int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 {
 	int output = -1;
 	FILE *pArch;
-
-	controller_loadFromText("data.csv", pArrayListEmployee);
-	controller_saveAsBinary("data.bin", pArrayListEmployee);
 
 	ll_clear(pArrayListEmployee);
 
@@ -137,13 +138,13 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	return output;
 }
 
-/** \brief Alta de empleados
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief controller_addEmployee: Alta de empleados
+ * \param path char*: ruta del archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
+
 int controller_addEmployee(LinkedList* pArrayListEmployee)
 {
 	int output = -1;
@@ -177,6 +178,12 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 	return output;
 }
 
+/*
+ * \brief controller_printSingleEmployee: Imprime un empleado a partir de su indice
+ * \param path char*: ruta del archivo a cargar
+ * \param index int: indice a imprimir
+ * \return (-1) Error / (0) Ok
+ */
 
 int controller_printSingleEmployee(LinkedList* pArrayListEmployee, int index)
 {
@@ -204,12 +211,9 @@ int controller_printSingleEmployee(LinkedList* pArrayListEmployee, int index)
 	return output;
 }
 
-/** \brief Listar empleados
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/** \brief controller_ListEmployee: Imprime la lista de empleados
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
 
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
@@ -232,6 +236,13 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
     }
 	return output;
 }
+
+/*
+ * \brief controller_findIndexById: Devuelve el indice del empleado a partir del ID
+ * \param path char*: ruta del archivo a cargar
+ * \param id int: Id a partir del cual se busca el indice
+ * \return (-1) Error / (i) Ok
+ */
 
 int controller_findIndexById(LinkedList* pArrayListEmployee, int id)
 {
@@ -260,13 +271,12 @@ int controller_findIndexById(LinkedList* pArrayListEmployee, int id)
 }
 
 
-/** \brief Modificar datos de empleado
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief controller_editEmployee: Modificar datos de empleado
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (i) Ok
  */
+
 int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
 	int output = -1;
@@ -289,7 +299,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 			controller_printSingleEmployee(pArrayListEmployee, index);
 			printf("---------------------------------------------------------------");
 
-			pEmployee = (Employee*) ll_get(pArrayListEmployee, index);
+			pEmployee = (Employee*)ll_get(pArrayListEmployee, index);
 			do
 			{
 				menu_getModifyMenu(&choosenOption);
@@ -299,7 +309,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 						if (utn_getString("Ingrese nombre: ", "Error", bufferEmployee.nombre, 3, sizeof(bufferEmployee.nombre)) == 0)
 						{
 							employee_setNombre(pEmployee, bufferEmployee.nombre);
-
+							output = 0;
 						}
 						else
 						{
@@ -310,7 +320,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 						if (utn_getIntNumber("Ingrese horas trabajadas: ", "Error", &bufferEmployee.horasTrabajadas, 3,INT_MAX ,1) == 0)
 						{
 							employee_setHorasTrabajadas(pEmployee, bufferEmployee.horasTrabajadas);
-
+							output = 0;
 						}
 						else
 						{
@@ -322,6 +332,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 
 						{
 							employee_setSueldo(pEmployee, bufferEmployee.sueldo);
+							output = 0;
 						}
 						else
 						{
@@ -330,43 +341,97 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 						break;
 				}
 			} while (choosenOption != 4);
-			output = 0;
+			ll_set(pArrayListEmployee, index, pEmployee);
 		}
-	}
-	else
-	{
-		printf("ERROR INDICE INEXISTENTE");
+		else
+		{
+			printf("\nERROR ID INEXISTENTE\n");
+		}
 	}
 	return output;
 }
 
-/** \brief Baja de empleado
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief controller_removeEmployee: Baja de empleado
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
+
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int output = -1;
+	Employee* pEmployee;
+	Employee bufferEmployee;
+	int index = -1;
+	int choosenOption;
+
+	if (pArrayListEmployee != NULL)
+	{
+		controller_ListEmployee(pArrayListEmployee);
+		if(utn_getIntNumber("\nIngrese el id del empleado que quiere eliminar: ", "\nID INEXISTENTE. , ", &bufferEmployee.id, 3,employee_findMaxId(pArrayListEmployee), 1)==0)
+		{
+			index = controller_findIndexById(pArrayListEmployee, bufferEmployee.id);
+			printf("---------------------------------------------------------------");
+			printf("\n|                     EMPLEADO A ELIMINAR                    |\n");
+			printf("---------------------------------------------------------------");
+			printf("\n|  ID  |        NOMBRE        | HORAS TRABAJADAS |   SUELDO   |\n");
+			printf("---------------------------------------------------------------");
+			controller_printSingleEmployee(pArrayListEmployee, index);
+			printf("---------------------------------------------------------------");
+
+			pEmployee = (Employee*) ll_get(pArrayListEmployee, index);
+			utn_getIntNumber("\n¿Desea eliminar el siguiente registro?\n 1-SI\n 2-NO\nOpcion:", "ERROR INGRESE UNA OPCION VALIDA", &choosenOption, 3, 2, 1);
+			if(choosenOption==1)
+			{
+				employee_delete(pEmployee);
+				output = ll_remove(pArrayListEmployee,index);
+				output = 0;
+			}
+			else
+			{
+				printf("\nEL EMPLEADO NO FUE ELIMINADO.\n");
+			}
+		}
+		else
+		{
+			printf("\nERROR ID INEXISTENTE\n");
+		}
+	}
+	return output;
 }
 
-
-
-
-
-
-/** \brief Ordenar empleados
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief controller_sortEmployee: Ordenar empleados
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
+
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int output = -1;
+	int choosenOption;
+	int choosenOrder;
+
+	if (pArrayListEmployee != NULL)
+	{
+		menu_getSortMenu(&choosenOption,&choosenOrder);
+		switch (choosenOption)
+		{
+			case 1:
+				output = ll_sort(pArrayListEmployee, employee_compareId,choosenOrder);
+				break;
+			case 2:
+				output = ll_sort(pArrayListEmployee, employee_compareNombre,choosenOrder);
+				break;
+			case 3:
+				output = ll_sort(pArrayListEmployee, employee_compareHorasTrabajadas,choosenOrder);
+				break;
+			case 4:
+				output = ll_sort(pArrayListEmployee, employee_compareSueldo,choosenOrder);
+				break;
+		}
+	}
+	return output;
 }
 
 

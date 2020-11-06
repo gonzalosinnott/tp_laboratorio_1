@@ -1,3 +1,13 @@
+ /*
+ ============================================================================
+ Name        : parser.C
+ Author      : Gonzalo Sinnott Segura
+ Version     :
+ Copyright   :
+ Description : Library parser.c
+ ============================================================================
+ */
+
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include "LinkedList.h"
@@ -5,12 +15,50 @@
 
 #define BUFFER_LEN 500
 
-/** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief parser_EmployeeFromText: Parsea los datos de los empleados desde el archivo data.csv (modo texto).
+ * \param pFile FILE* puntero al archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
+ */
+
+int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
+{
+	int output = -1;
+	Employee* pEmployee;
+	char bufferHeader[BUFFER_LEN];
+	char bufferId[BUFFER_LEN];
+	char bufferName[BUFFER_LEN];
+	char bufferWorkedHours[BUFFER_LEN];
+	char bufferSalary[BUFFER_LEN];
+
+	if (pFile != NULL && pArrayListEmployee != NULL)
+	{
+		fscanf(pFile, "%[^\n]\n", bufferHeader);
+		do
+		{
+			if (fscanf(pFile, "%[^,],%[^,],%[^,],%[^\n]\n", bufferId, bufferName, bufferWorkedHours, bufferSalary) == 4)
+			{
+				pEmployee = employee_newParametros(bufferId, bufferName, bufferWorkedHours, bufferSalary);
+				if (pEmployee != NULL)
+				{
+					output = ll_add(pArrayListEmployee, pEmployee);
+				}
+				else
+				{
+					output = -1;
+					break;
+				}
+			}
+		}while (!feof(pFile));
+	}
+	return output;
+}
+/*
+ * \brief parser_EmployeeToText: Parsea los datos de los empleados al archivo data.csv (modo texto).
+ * \param pFile FILE* puntero al archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
 
 int parser_EmployeeToText(FILE* pFile , LinkedList* pArrayListEmployee)
@@ -37,53 +85,20 @@ int parser_EmployeeToText(FILE* pFile , LinkedList* pArrayListEmployee)
 				employee_getHorasTrabajadas(pEmployee, &bufferHorasTrabajadas) == 0)
 			{
 				fprintf(pFile, "%d,%s,%d,%.2f\n", bufferId, bufferNombre, bufferHorasTrabajadas, bufferSueldo);
+				output = 0;
 			}
 		}
-		output = 0;
 	}
 	return output;
 }
 
-int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
-{
-	int output = -1;
-	Employee* pEmployee;
-	char bufferHeader[BUFFER_LEN];
-	char bufferId[BUFFER_LEN];
-	char bufferName[BUFFER_LEN];
-	char bufferWorkedHours[BUFFER_LEN];
-	char bufferSalary[BUFFER_LEN];
-
-	if (pFile != NULL && pArrayListEmployee != NULL)
-	{
-		fscanf(pFile, "%[^\n]\n", bufferHeader);//for skipping the header
-		do
-		{
-			if (fscanf(pFile, "%[^,],%[^,],%[^,],%[^\n]\n", bufferId, bufferName, bufferWorkedHours, bufferSalary) == 4)
-			{
-				pEmployee = employee_newParametros(bufferId, bufferName, bufferWorkedHours, bufferSalary);
-				if (pEmployee != NULL)
-				{
-					output = ll_add(pArrayListEmployee, pEmployee);
-				}
-				else
-				{
-					output = -1;
-					break;
-				}
-			}
-		}while (!feof(pFile));
-	}
-	return output;
-}
-
-/** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
+/*
+ * \brief parser_EmployeeFromBinary: Parsea los datos de los empleados desde el archivo data.csv (modo binario).
+ * \param pFile FILE* puntero al archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
  */
+
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 
@@ -113,6 +128,13 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 	}
 	return output;
 }
+
+/*
+ * \brief parser_EmployeeToBinary: Parsea los datos de los empleados al archivo data.csv (modo binario).
+ * \param pFile FILE* puntero al archivo a cargar
+ * \param pArrayListEmployee LinkedList*: puntero al array de empleados
+ * \return (-1) Error / (0) Ok
+ */
 
 int parser_EmployeeToBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {

@@ -17,6 +17,4 @@ int utn_getString(char* msj, char* errorMsj, char* pValue,int retries, int len);
 int utn_getAlphaNum(char* msj, char* errorMsj, char* pValue,int retries, int len);
 int utn_getCuit(char* msj, char* errorMsj, char* pValue,int retries, int len);
 
-
-
 #endif /* UTN_H_ */
