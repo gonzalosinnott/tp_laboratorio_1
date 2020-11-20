@@ -11,9 +11,13 @@
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <float.h>
 #include "calculadora.h"
 #include "utn.h"
 
+
+#define TRUE 1
+#define FALSE 0
 #define MAINMENU_HEADER "|          CALCULADORA          |"
 #define MAINMENU_MSJ "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Realizar calculos.\n 4. Informar resultados\n 5. Salir\nOpcion:"
 #define ERROR_MSJ "ERROR, INGRESE UNA OPCION VALIDA. "
@@ -56,16 +60,12 @@ int calculadora_getNumber(float* number)
 	int retorno = -1;
 	float num;
 	int intentos = 3;
-	int retornoScanf;
 
 	if(number != NULL)
 	{
 		do
 		{
-			printf("Ingrese un numero: \n");
-			__fpurge(stdin);
-			retornoScanf = scanf( "%f" ,&num);
-			if(retornoScanf == 1)
+			if(utn_getFloatNumber("\nIngrese un numero: \n", "Error,", &num,3, FLT_MAX ,-FLT_MAX) == 0)
 			{
 				*number = num;
 				printf("Numero ingresado: %.2f\n",num);
@@ -235,17 +235,17 @@ int getOperaciones(float numeroUno, float numeroDos, float* resultadoSuma, float
 		if(getDivision(numeroUno,numeroDos,&resultado) == 0)
 		{
 			*resultadoDivision = resultado;
-			*errorDivision = 0;
+			*errorDivision = FALSE;
 		}
 		if(getFactorial(numeroUno, &resultado) == 0)
 		{
 			*resultadoFactorialUno = resultado;
-			*errorFactorialUno = 0;
+			*errorFactorialUno = FALSE;
 		}
 		if(getFactorial(numeroDos, &resultado) == 0)
 		{
 			*resultadoFactorialDos = resultado;
-			*errorFactorialDos = 0;
+			*errorFactorialDos = FALSE;
 		}
 		retorno = 0;
 		printf("\nCalculando...\n");
@@ -276,7 +276,8 @@ int printResultados(float numeroUno, float numeroDos, float resultadoSuma, float
 	printf("\nEl resultado de %.2f + %.2f es: %.2f",numeroUno,numeroDos,resultadoSuma);
 	printf("\nEl resultado de %.2f - %.2f es: %.2f",numeroUno,numeroDos,resultadoResta);
 	printf("\nEl resultado de %.2f * %.2f es: %.2f",numeroUno,numeroDos,resultadoMultiplicacion);
-	if(errorDivision == 0)
+
+	if(errorDivision == FALSE)
 	{
 		printf("\nEl resultado de la division es: %.2f", resultadoDivision);
 	}
@@ -284,7 +285,8 @@ int printResultados(float numeroUno, float numeroDos, float resultadoSuma, float
 	{
 		printf("\nNo se puede dividir por 0.");
 	}
-	if(errorFactorialUno == 0)
+
+	if(errorFactorialUno == FALSE)
 	{
 		printf("\nEl factorial de %.2f es: %.d",numeroUno, resultadoFactorialUno);
 	}
@@ -292,7 +294,8 @@ int printResultados(float numeroUno, float numeroDos, float resultadoSuma, float
 	{
 		printf("\nNo es posible calcular el factorial de %.2f.",numeroUno);
 	}
-	if(errorFactorialDos == 0)
+
+	if(errorFactorialDos == FALSE)
 	{
 		printf("\nEl factorial de %.2f es: %.d\n",numeroDos, resultadoFactorialDos);
 	}

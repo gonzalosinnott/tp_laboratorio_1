@@ -147,7 +147,7 @@ static int isInt(char* string)
  * \return (-1) Error / (0) Ok
  */
 
-int utn_getFloatNumber(char* msj, char* errorMsj, float* pValue,int retries, int max, int min)
+int utn_getFloatNumber(char* msj, char* errorMsj, float* pValue,int retries, float max, float min)
 {
 	int output = -1;
 	float bufferFloat;
@@ -205,6 +205,7 @@ static int isFloat(char* string)
 {
 	int output = 1;
 	int i = 0;
+	int comaCount = 0;
 
 	if(string[0] == '-')
 	{
@@ -214,10 +215,14 @@ static int isFloat(char* string)
 	{
 		while(string[i] != '\0')
 		{
-			if((string[i] < '0' || string[i] > '9') && string[i] != '.')
+			if(string[i] == '.')
 			{
-				output = 0;
-				break;
+				comaCount++;
+				if(((string[i] < '0' || string[i] > '9') && string[i] != '.') || comaCount > 1)
+				{
+					output = 0;
+					break;
+				}
 			}
 			i++;
 		}

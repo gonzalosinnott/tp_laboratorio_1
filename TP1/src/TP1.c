@@ -39,26 +39,26 @@
 #include "calculadora.h"
 #include "utn.h"
 
-#define TRUE 0
-#define FALSE 1
+#define TRUE 1
+#define FALSE 0
 
 int main(void)
 {
 	int opcionIngresada;
 	float numeroUno;
 	float numeroDos;
-	int	ingresoNumeroUno = 0;
-	int	ingresoNumeroDos = 0;
-	int calculoOperaciones = 0;
+	int	ingresoNumeroUno = FALSE;
+	int	ingresoNumeroDos = FALSE;
+	int calculoOperaciones = FALSE;
 	float resultadoSuma;
 	float resultadoResta;
 	float resultadoMultiplicacion;
 	float resultadoDivision;
 	int resultadoFactorialUno;
 	int resultadoFactorialDos;
-	int errorDivision = 1;
-	int errorFactorialUno = 1;
-	int errorFactorialDos = 1;
+	int errorDivision = TRUE;
+	int errorFactorialUno = TRUE;
+	int errorFactorialDos = TRUE;
 	char respuestaOtraOperacion;
 
 	do

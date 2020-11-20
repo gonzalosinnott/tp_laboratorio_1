@@ -11,11 +11,8 @@
 #ifndef CALCULADORA_H_
 #define CALCULADORA_H_
 
-int getEntero(int* pNumero, char* msj, char* msjError, int reintentos);
-int getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjError, int intentos);
-int getFloat(float* pValor, char* msj, char* msjError, int intentos);
-int getFloatConRango(float* pValor, int min, int max, char* msj, char* msjError, int intentos);
-int getChar(char* pValor,char* msj, char* msjError, int intentos);
+int calculadora_getMainMenu(int* choosenOption);
+int calculadora_getNumber(float* number);
 
 int getSuma (float numeroUno, float numeroDos, float *resultado);
 int getResta (float numeroUno, float numeroDos, float *resultado);
