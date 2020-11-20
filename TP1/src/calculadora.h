@@ -8,8 +8,8 @@
  ============================================================================
  */
 
-#ifndef MI_BIBLIOTECA_H_
-#define MI_BIBLIOTECA_H_
+#ifndef CALCULADORA_H_
+#define CALCULADORA_H_
 
 int getEntero(int* pNumero, char* msj, char* msjError, int reintentos);
 int getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjError, int intentos);
@@ -26,4 +26,4 @@ int getFactorial(float numero,float* resultado);
 int getOperaciones(float numeroUno, float numeroDos, float* resultadoSuma, float* resultadoResta, float* resultadoMultiplicacion, float* resultadoDivision, int* resultadoFactorialUno, int* resultadoFactorialDos, int* errorDivision, int* errorFactorialUno, int* errorFactorialDos);
 int printResultados(float numeroUno, float numeroDos, float resultadoSuma, float resultadoResta, float resultadoMultiplicacion, float resultadoDivision, int resultadoFactorialUno, int resultadoFactorialDos, int errorDivision, int errorFactorialUno, int errorFactorialDos);
 
-#endif /* MI_BIBLIOTECA_H_ */
+#endif /* CALCULADORA_H_ */

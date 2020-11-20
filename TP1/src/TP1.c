@@ -36,7 +36,11 @@
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "mi_biblioteca.h"
+#include "calculadora.h"
+#include "utn.h"
+
+#define TRUE 0
+#define FALSE 1
 
 int main(void)
 {
@@ -59,82 +63,72 @@ int main(void)
 
 	do
 	{
-		if(getEnteroConRango(&opcionIngresada, 1, 5, "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Elegir operacion a calcular.\n 4. Informar resultados\n 5. Salir\n\nOpcion:", "\nError, no es una opcion valida.", 3)==0)
+		calculadora_getMainMenu(&opcionIngresada);
+		switch(opcionIngresada)
 		{
-			switch(opcionIngresada)
-			{
-				case 1:
-					if(getFloat(&numeroUno, "\nIngrese el primer numero:", "\nError, ", 3) ==0)
+			case 1:
+				if(calculadora_getNumber(&numeroUno) ==0)
+				{
+					ingresoNumeroUno = TRUE;
+				}
+				break;
+			case 2:
+				if(ingresoNumeroUno == TRUE)
+				{
+					if(calculadora_getNumber(&numeroDos) ==0)
 					{
-						printf("Numero ingresado: %.2f\n",numeroUno);
-						ingresoNumeroUno = 1;
+						ingresoNumeroDos = TRUE;
 					}
-					break;
-				case 2:
-					if(ingresoNumeroUno == 1)
+				}
+				else
+				{
+					printf("\nError, ingrese el primer numero.\n");
+				}
+				break;
+			case 3:
+				if(ingresoNumeroUno == TRUE && ingresoNumeroDos == TRUE)
+				{
+					getOperaciones(numeroUno, numeroDos, &resultadoSuma, &resultadoResta, &resultadoMultiplicacion, &resultadoDivision, &resultadoFactorialUno, &resultadoFactorialDos, &errorDivision, &errorFactorialUno, &errorFactorialDos);
+					calculoOperaciones = TRUE;
+				}
+				else
+				{
+					printf("\nError, no se ingresaron ambos numeros.\n");
+				}
+				break;
+			case 4:
+				if(calculoOperaciones == TRUE)
+				{
+					printResultados(numeroUno, numeroDos, resultadoSuma, resultadoResta, resultadoMultiplicacion, resultadoDivision, resultadoFactorialUno, resultadoFactorialDos, errorDivision, errorFactorialUno, errorFactorialDos);
+					do
 					{
-						if(getFloat(&numeroDos, "\nIngrese el segundo numero:", "\nError, ", 3)== 0)
-						{
-							printf("Numero ingresado: %.2f\n",numeroDos);
-							ingresoNumeroDos = 1;
-						}
-					}
-					else
+						printf("\n¿Desea realizar otra operacion? (y/n)\n");
+						__fpurge(stdin);
+						scanf("%c",&respuestaOtraOperacion);
+					}while(respuestaOtraOperacion !='y' && respuestaOtraOperacion !='n');
+					if(respuestaOtraOperacion=='n')
 					{
-						printf("\nError, ingrese el primer numero.\n");
-					}
-					break;
-				case 3:
-					if(ingresoNumeroUno == 1 && ingresoNumeroDos == 1)
-					{
-						getOperaciones(numeroUno, numeroDos, &resultadoSuma, &resultadoResta, &resultadoMultiplicacion, &resultadoDivision, &resultadoFactorialUno, &resultadoFactorialDos, &errorDivision, &errorFactorialUno, &errorFactorialDos);
-						printf("\nCalculando...\n");
-						calculoOperaciones = 1;
-					}
-					else
-					{
-						printf("\nError, no se ingresaron ambos numeros.\n");
-					}
-					break;
-				case 4:
-					if(calculoOperaciones == 1)
-					{
-						printResultados(numeroUno, numeroDos, resultadoSuma, resultadoResta, resultadoMultiplicacion, resultadoDivision, resultadoFactorialUno, resultadoFactorialDos, errorDivision, errorFactorialUno, errorFactorialDos);
-						do
-						{
-							printf("\n¿Desea realizar otra operacion? (y/n)\n");
-							__fpurge(stdin);
-							scanf("%c",&respuestaOtraOperacion);
-						}while(respuestaOtraOperacion !='y' && respuestaOtraOperacion !='n');
-						if(respuestaOtraOperacion=='n')
-						{
-							printf("\nPrograma terminado.");
-							return EXIT_SUCCESS;
-						}
-						else
-						{
-							ingresoNumeroUno = 0;
-							ingresoNumeroDos = 0;
-							calculoOperaciones = 0;
-							errorDivision = 1;
-							errorFactorialUno = 1;
-							errorFactorialDos = 1;
-						}
+						printf("\nPrograma terminado.");
+						return EXIT_SUCCESS;
 					}
 					else
 					{
-						printf("\nError, no se ingresaron numeros o no se hizo el calculo de operaciones.\n");
+						ingresoNumeroUno = FALSE;
+						ingresoNumeroDos = FALSE;
+						calculoOperaciones = FALSE;
+						errorDivision = TRUE;
+						errorFactorialUno = TRUE;
+						errorFactorialDos = TRUE;
 					}
-					break;
-				case 5:
-					printf("\nPrograma terminado.");
-					break;
-			}
-		}
-		else
-		{
-			printf("\nPrograma terminado.");
-			break;
+				}
+				else
+				{
+					printf("\nError, no se ingresaron numeros o no se hizo el calculo de operaciones.\n");
+				}
+				break;
+			case 5:
+				printf("\nPrograma terminado.");
+				break;
 		}
 	}while(opcionIngresada != 5);
 	return EXIT_SUCCESS;

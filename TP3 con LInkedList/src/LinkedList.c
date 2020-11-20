@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../inc/LinkedList.h"
+#include "LinkedList.h"
 
 
 static Node* getNode(LinkedList* this, int nodeIndex);
@@ -541,11 +541,8 @@ int ll_sort(LinkedList* this, int (*pFunc)(void*,void*), int order)
     return output;
 }
 
-/*
-//// F(X) EXTRAS/////
-
-
 //Recorre una lista  y le paso una funcion para que haga algo con esa lista
+
 
 int ll_map(LinkedList* this, int (*pFunc)(void*))
 {
@@ -564,128 +561,4 @@ int ll_map(LinkedList* this, int (*pFunc)(void*))
 	return output;
 }
 
-//F(x) para ll_map
-
-int funcion(void* pElemento)
-{
-	Estructura* pElemento;
-
-	pElemento (Estructura*) pElemento;
-
-	pElemento->//Accedo a los campos de la estructura
-
-	//Hago lo que se me cante
-}
-
-//ll_filter
-
-int ll_filter(LinkedList* this, int (pFunc)(void))
-{
-	int output = -1;
-	int len = ll_len(this);
-	int nuevoLimite;
-	int flagSwap;
-	int i;
-	if(this != NULL && pFunc != NULL && len > 0)
-	{
-		nuevoLimite = len - 1;
-		do
-		{
-			flagSwap=0;
-			for(i=0; i<nuevoLimite;i++)
-			{
-				if((pFunc(ll_get(this, i)) == 0))
-				{
-					ll_remove(this, i);
-					flagSwap = 1;
-					break;
-				}
-			}
-			nuevoLimite--;
-		}
-		while(flagSwap);
-		output = 0;
-	}
-	return output;
-}
-
-//ll_reduce
-
-int ll_reduceInt(LinkedList* this, int (pFunc)(void), int* pResultado)
-{
-	int returnAux=-1;
-	int len = ll_len(this);
-	int acc=0;
-	void* pElement=NULL;
-	if(this!=NULL && pFunc!=NULL && len>-1)
-	{
-		for(int i=0;i<len;i++)
-		{
-			pElement = ll_get(this, i);
-			acc=+ pFunc(pElement);
-		}
-		*pResultado = acc;
-		returnAux=0;
-	}
-	return returnAux;
-}
-
-float ll_reduceFloat(LinkedList* this, int (*pFunc)(void*))
-{
-
-}
-
-int ll_reduceInt(LinkedList* this, int (*pFunc)(void*))
-{
-
-}
-
-//FUNCIONES FALOPA
-
-int ll_del(LinkedList* this, int(pFunc)(void*))
-{
-	int returnAux=-1;
-	int len=ll_len(this);
-	Node* pElementAux;
-
-	if(this!=NULL && pFunc!=NULL)
-	{
-		for(int i=0;i<len;i++)
-		{
-			pElementAux=getNode(this,i);
-			if(pElementAux!=NULL && pFunc(pElementAux->pElement)==0)
-			{
-				ll_remove(this,i);
-				returnAux=0;
-			}
-		}
-	}
-	return returnAux;
-}
-
-
-LinkedList* ll_cloneWithFilter(LinkedList* this, int (pFunc)(void))
-{
-	int len = ll_len(this);
-	LinkedList* auxList;
-	void* pElement=NULL;
-	if(this!=NULL && pFunc!=NULL)
-	{
-		auxList = ll_newLinkedList();
-		if(auxList!=NULL)
-		{
-			for(int i=0; i<len;i++)
-			{
-				pElement = ll_get(this, i);
-				if(pElement!=NULL && pFunc(pElement)==0)
-				{
-					ll_add(auxList, pElement);
-				}
-			}
-		}
-	}
-	return auxList;
-}
-
-*/
 

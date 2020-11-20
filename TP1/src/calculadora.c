@@ -11,115 +11,64 @@
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include "calculadora.h"
+#include "utn.h"
 
-/*
- * \brief getEntero : Pide al usuario un numero entero.
- * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
- * \param msg: El mensaje que imprime para pedir un valor
- * \param msgError: El mensaje que imprime si el rango no es valido
- * \param intentos: Intentos totales que quiero dejar al usuario ingresar un valor no valido.
- * \return retorno: 0: si esta OK. -1: Si hubo un error
+#define MAINMENU_HEADER "|          CALCULADORA          |"
+#define MAINMENU_MSJ "\nIngrese una opcion:\n 1. Ingrese el primer numero\n 2. Ingrese el segundo numero\n 3. Realizar calculos.\n 4. Informar resultados\n 5. Salir\nOpcion:"
+#define ERROR_MSJ "ERROR, INGRESE UNA OPCION VALIDA. "
+
+
+/**
+ * \brief menu_getMainMenu: Menu principal del programa
+ * \param choosenOption* int: Puntero a la direccion nde memoria de la variable que almacena la opcion elegida
+ * \return (-1) Error / (0) Ok
  */
 
-int getEntero(int* pValor, char* msj, char* msjError, int intentos)
+int calculadora_getMainMenu(int* choosenOption)
 {
-	int retorno = -1;
-	int num;
-	int retornoScanf;
-
-	if(pValor != NULL && msj != NULL && msjError != NULL)
+	int output = -1;
+	if(choosenOption !=NULL)
 	{
-		do
+		printf("\n---------------------------------\n");
+		printf(MAINMENU_HEADER);
+		printf("\n---------------------------------\n");
+		if(utn_getIntNumber(MAINMENU_MSJ,ERROR_MSJ, choosenOption, 3, 5, 1)==0)
 		{
-			printf("%s", msj);
-			__fpurge(stdin);
-			retornoScanf = scanf( "%d" ,&num);
-			if(retornoScanf == 1)
-			{
-				*pValor = num;
-				retorno = 0;
-				break;
-			}
-			intentos--;
-			if(intentos == 0)
-			{
-				printf("\nSe agotaron los intentos");
-				break;
-			}
-			printf("%s Te quedan %d reintentos.", msjError,intentos);
-		}while(intentos > 0);
+			output =0;
+		}
+		else
+		{
+			*choosenOption = 5;
+		}
 	}
-
-	return retorno;
+	return output;
 }
 
-/*
- * \brief getEnteroConRango : Pide al usuario un numero entero dentor de un rango determinado.
- * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
- * \param min: Valor minimo valido (inclusive)
- * \param max: Valor maximo valido (inclusive)
- * \param msg: El mensaje que imprime para pedir un valor
- * \param msgError: El mensaje que imprime si el rango no es valido
- * \param intentos: Intentos totales que quiero dejar al usuario ingresar un valor no valido.
- * \return retorno: 0: si esta OK. -1: Si hubo un error
+/**
+ * \brief calculadora_getNumber: F(x) para obtener los numeros para realizar los calculos
+ * \param number float*: Puntero a la direccion nde memoria de la variable que almacena la opcion elegida
+ * \return (-1) Error / (0) Ok
  */
 
-int getEnteroConRango(int* pValor, int min, int max, char* msj, char* msjError, int intentos)
-{
-	int retorno = -1;
-	int num;
-	int retornoScanf;
-
-	if(pValor != NULL && msj != NULL && msjError != NULL)
-	{
-		do
-		{
-			printf("%s", msj);
-			__fpurge(stdin);
-			retornoScanf = scanf( "%d" ,&num);
-			if(retornoScanf == 1 && num >= min && num <= max)
-			{
-				*pValor = num;
-				retorno = 0;
-				break;
-			}
-			intentos--;
-			if(intentos == 0)
-			{
-				printf("\nSe agotaron los intentos");
-				break;
-			}
-			printf("%s Te quedan %d reintentos.", msjError,intentos);
-		}while(intentos > 0);
-	}
-	return retorno;
-}
-
-/*
- * \brief getFloat : Pide al usuario un numero con decimales.
- * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
- * \param msg: El mensaje que imprime para pedir un valor
- * \param msgError: El mensaje que imprime si el rango no es valido
- * \param intentos: Intentos totales que quiero dejar al usuario ingresar un valor no valido.
- * \return retorno: 0: si esta OK. -1: Si hubo un error
- */
-
-int getFloat(float* pValor, char* msj, char* msjError, int intentos)
+int calculadora_getNumber(float* number)
 {
 	int retorno = -1;
 	float num;
+	int intentos = 3;
 	int retornoScanf;
 
-	if(pValor != NULL && msj != NULL && msjError != NULL)
+	if(number != NULL)
 	{
 		do
 		{
-			printf("%s", msj);
+			printf("Ingrese un numero: \n");
 			__fpurge(stdin);
 			retornoScanf = scanf( "%f" ,&num);
 			if(retornoScanf == 1)
 			{
-				*pValor = num;
+				*number = num;
+				printf("Numero ingresado: %.2f\n",num);
 				retorno = 0;
 				break;
 			}
@@ -129,88 +78,7 @@ int getFloat(float* pValor, char* msj, char* msjError, int intentos)
 				printf("\nSe agotaron los intentos\n");
 				break;
 			}
-			printf("%s te quedan %d reintentos.", msjError,intentos);
-		}while(intentos > 0);
-	}
-	return retorno;
-}
-
-/*
- * \brief getFloatConRango : Pide al usuario un numero con decimales dentro de un rango determinado
- * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
- * \param min: Valor minimo valido (inclusive)
- * \param max: Valor maximo valido (inclusive)
- * \param msg: El mensaje que imprime para pedir un valor
- * \param msgError: El mensaje que imprime si el rango no es valido
- * \param intentos: Intentos totales que quiero dejar al usuario ingresar un valor no valido.
- * \return retorno: 0: si esta OK. -1: Si hubo un error
- */
-
-int getFloatConRango(float* pValor, int min, int max, char* msj, char* msjError, int intentos)
-{
-	int retorno = -1;
-	float num;
-	int retornoScanf;
-
-	if(pValor != NULL && msj != NULL && msjError != NULL)
-	{
-		do
-		{
-			printf("%s", msj);
-			__fpurge(stdin);
-			retornoScanf = scanf( "%f" ,&num);
-			if(retornoScanf == 1 && num >= min && num <= max)
-			{
-				*pValor = num;
-				retorno = 0;
-				break;
-			}
-			intentos--;
-			if(intentos == 0)
-			{
-				printf("\nSe agotaron los intentos");
-				break;
-			}
-			printf("%s Te quedan %d reintentos.", msjError,intentos);
-		}while(intentos > 0);
-	}
-	return retorno;
-}
-
-/*
- * \brief getChar : Pide al usuario una letra.
- * \param pValor: Direccion de memoria de la variable donde escribe el valor ingresado por el usuario
- * \param msg: El mensaje que imprime para pedir un valor
- * \param msgError: El mensaje que imprime si el rango no es valido
- * \param intentos: Intentos totales que quiero dejar al usuario ingresar un valor no valido.
- * \return retorno: 0: si esta OK. -1: Si hubo un error
- */
-
-int getChar(char* pValor,char* msj, char* msjError, int intentos)
-{
-	int retorno = -1;
-	char letra;
-
-	if(pValor != NULL && msj != NULL && msjError != NULL)
-	{
-		do
-		{
-			printf("%s", msj);
-			__fpurge(stdin);
-			scanf( "%c" ,&letra);
-			if(isalpha(letra) != 0)
-			{
-				*pValor = letra;
-				retorno = 0;
-				break;
-			}
-			intentos--;
-			if(intentos == 0)
-			{
-				printf("\nSe agotaron los intentos");
-				break;
-			}
-			printf("%s Te quedan %d reintentos.", msjError,intentos);
+			printf("Error, te quedan %d reintentos.",intentos);
 		}while(intentos > 0);
 	}
 	return retorno;
@@ -380,6 +248,7 @@ int getOperaciones(float numeroUno, float numeroDos, float* resultadoSuma, float
 			*errorFactorialDos = 0;
 		}
 		retorno = 0;
+		printf("\nCalculando...\n");
 	}
 	return retorno;
 }
