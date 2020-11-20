@@ -285,8 +285,12 @@ int printResultados(float numeroUno, float numeroDos, float resultadoSuma, float
 	{
 		printf("\nNo se puede dividir por 0.");
 	}
+	if(numeroUno > 12)
+	{
+		printf("\nPor limitaciones del programa no se pueden calcular factoriales de numeros mayores a 12");
 
-	if(errorFactorialUno == FALSE)
+	}
+	else if(errorFactorialUno == FALSE)
 	{
 		printf("\nEl factorial de %.2f es: %.d",numeroUno, resultadoFactorialUno);
 	}
@@ -295,7 +299,12 @@ int printResultados(float numeroUno, float numeroDos, float resultadoSuma, float
 		printf("\nNo es posible calcular el factorial de %.2f.",numeroUno);
 	}
 
-	if(errorFactorialDos == FALSE)
+	if(numeroDos > 12)
+	{
+		printf("\nPor limitaciones del programa no se pueden calcular factoriales de numero1s mayores a 12");
+
+	}
+	else if(errorFactorialDos == FALSE)
 	{
 		printf("\nEl factorial de %.2f es: %.d\n",numeroDos, resultadoFactorialDos);
 	}
