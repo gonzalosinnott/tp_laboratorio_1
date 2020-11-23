@@ -301,7 +301,7 @@ int printResultados(float numeroUno, float numeroDos, float resultadoSuma, float
 
 	if(numeroDos > 12)
 	{
-		printf("\nPor limitaciones del programa no se pueden calcular factoriales de numero1s mayores a 12");
+		printf("\nPor limitaciones del programa no se pueden calcular factoriales de numeros mayores a 12");
 
 	}
 	else if(errorFactorialDos == FALSE)
