@@ -133,8 +133,9 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 		{
 			printf("ERROR, NO SE PUDO CARGAR EL ARCHIVO");
 		}
+		fclose(pArch);
 	}
-	fclose(pArch);
+
 	return output;
 }
 
